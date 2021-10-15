@@ -29,7 +29,7 @@ class Account {
     @Column (name = "account_password")
     private String password;
 
-    @Column (name = "date")
+    @Column (name = "join_date")
     private Date joinDate;
 
     @Column (name = "is_admin")

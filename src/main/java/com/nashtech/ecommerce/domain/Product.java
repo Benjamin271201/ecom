@@ -20,7 +20,7 @@ public @Data class Product {
     @NotBlank (message = "Product name cannot be empty!")
     private String name;
 
-    @ManyToOne (optional = true)
+    @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
@@ -39,7 +39,9 @@ public @Data class Product {
     private String description;
 
     @NotBlank (message = "Product quantity cannot be empty!")
+    @Column (name = "quantity")
     private int quantity;
 
+    @Column (name = "is_active")
     boolean isActive;
 }
