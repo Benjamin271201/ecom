@@ -9,6 +9,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @Getter
 @Setter
+@Entity @Table (name = "address")
+
 public @Data class Address {
     @Id @Column (name = "id")
     private int id;

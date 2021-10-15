@@ -9,6 +9,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@Entity @Table (name = "transaction")
+
 public @Data class Transaction {
     @Id @Column (name = "id")
     private int id;

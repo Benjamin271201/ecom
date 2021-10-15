@@ -2,17 +2,15 @@ package com.nashtech.ecommerce.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public @Data
-class Cart {
+@Entity @Table (name = "cart")
+
+public @Data class Cart {
     @Id
     @Column (name = "id")
     private int id;

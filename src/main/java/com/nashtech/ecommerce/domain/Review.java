@@ -12,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@Entity @Table (name = "review")
 public class Review {
     @Id @Column (name = "id")
     private int id;
