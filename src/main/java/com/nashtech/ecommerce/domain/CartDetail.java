@@ -2,19 +2,21 @@ package com.nashtech.ecommerce.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public @Data
-class CartDetail {
+@Entity @Table (name = "cart_detail")
+
+public @Data class CartDetail implements Serializable {
+    @Id
     @ManyToOne @JoinColumn (name = "cart_id")
     private Cart cart;
 
+    @Id
     @ManyToOne @JoinColumn (name = "product_id")
     private Product product;
 

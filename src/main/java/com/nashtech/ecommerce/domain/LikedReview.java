@@ -2,17 +2,21 @@ package com.nashtech.ecommerce.domain;
 
 import lombok.*;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public @Data class LikedReview {
+@Entity @Table (name = "liked_review")
+
+public @Data class LikedReview implements Serializable {
+    @Id
     @ManyToOne @JoinColumn (name = "customer_id")
     private Customer customer;
 
+    @Id
     @ManyToOne @JoinColumn (name = "review_id")
     private Review review;
 }

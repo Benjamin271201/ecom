@@ -2,17 +2,16 @@ package com.nashtech.ecommerce.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.sql.Date;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
+@Entity @Table (name = "account")
 public @Data
-class Account {
+class Account implements Serializable {
     @Id
     private int id;
 

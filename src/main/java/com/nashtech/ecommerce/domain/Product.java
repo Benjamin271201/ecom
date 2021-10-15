@@ -2,21 +2,21 @@ package com.nashtech.ecommerce.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public @Data class Product {
+@Entity @Table (name = "product")
+
+public @Data class Product implements Serializable {
     @Id @Column (name = "id")
     private int id;
 
-    @Id @Column (name = "product_name")
+    @Column (name = "product_name", unique = true)
     @NotBlank (message = "Product name cannot be empty!")
     private String name;
 

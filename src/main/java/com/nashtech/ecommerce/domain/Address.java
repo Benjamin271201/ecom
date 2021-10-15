@@ -4,12 +4,15 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public @Data class Address {
+@Entity @Table (name = "address")
+
+public @Data class Address implements Serializable {
     @Id @Column (name = "id")
     private int id;
 
