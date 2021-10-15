@@ -3,12 +3,13 @@ package com.nashtech.ecommerce.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table (name = "transaction_detail")
-public @Data class TransactionDetail {
+public @Data class TransactionDetail implements Serializable {
     @Id
     @Getter @Setter
     @ManyToOne @JoinColumn (name = "transaction_id")

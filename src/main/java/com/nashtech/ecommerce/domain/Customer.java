@@ -2,29 +2,31 @@ package com.nashtech.ecommerce.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 @NoArgsConstructor @AllArgsConstructor
 @Getter
 @Setter
 @Entity @Table (name = "customer")
 
-public @Data class Customer {
-    @Id @Column (name = "id")
+public @Data class Customer implements Serializable {
+    @Id
+    @Column (name = "id")
     private int id;
 
-    @Pattern(regexp = "^[a-zA-Z]{4,50}$") @Column (name = "first_name")
+    @Column (name = "first_name")
     private String firstName;
 
-    @Pattern(regexp = "^[a-zA-Z]{4,50}$") @Column (name = "last_name")
+    @Column (name = "last_name")
     private String lastName;
 
     @Email @Column (name = "email", unique = true)
+    @NotEmpty(message = "Email cannot be empty!")
     private String email;
 
     @Pattern(regexp = "[0-9]{4,19}") @Column (name = "phone", unique = true)

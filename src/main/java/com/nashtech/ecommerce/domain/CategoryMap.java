@@ -3,6 +3,7 @@ package com.nashtech.ecommerce.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Entity @Table (name = "category_map")
 
-public @Data class CategoryMap {
+public @Data class CategoryMap implements Serializable {
     @Id
     @ManyToOne @JoinColumn(name = "product_id")
     private Product product;

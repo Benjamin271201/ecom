@@ -3,6 +3,7 @@ package com.nashtech.ecommerce.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -11,7 +12,7 @@ import java.util.Date;
 @Setter
 @Entity @Table (name = "transaction")
 
-public @Data class Transaction {
+public @Data class Transaction implements Serializable {
     @Id @Column (name = "id")
     private int id;
 

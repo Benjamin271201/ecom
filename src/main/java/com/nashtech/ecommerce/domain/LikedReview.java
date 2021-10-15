@@ -3,6 +3,7 @@ package com.nashtech.ecommerce.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Entity @Table (name = "liked_review")
 
-public @Data class LikedReview {
+public @Data class LikedReview implements Serializable {
     @Id
     @ManyToOne @JoinColumn (name = "customer_id")
     private Customer customer;

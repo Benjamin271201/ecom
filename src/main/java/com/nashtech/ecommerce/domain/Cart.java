@@ -3,6 +3,7 @@ package com.nashtech.ecommerce.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Entity @Table (name = "cart")
 
-public @Data class Cart {
+public @Data class Cart implements Serializable {
     @Id
     @Column (name = "id")
     private int id;

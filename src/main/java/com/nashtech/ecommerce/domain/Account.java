@@ -5,12 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.sql.Date;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 @Entity @Table (name = "account")
 public @Data
-class Account {
+class Account implements Serializable {
     @Id
     private int id;
 
