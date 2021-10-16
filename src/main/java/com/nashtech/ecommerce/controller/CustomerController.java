@@ -1,7 +1,7 @@
 package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Customer;
-import com.nashtech.ecommerce.repository.CustomerRepository;
+import com.nashtech.ecommerce.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,20 +12,20 @@ import java.util.List;
 @RequestMapping ("/customer")
 public class CustomerController {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping ("/all")
     public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+        return customerService.getAllCustomer();
     }
 
     @GetMapping ("/phone/{phone}")
     public ResponseEntity<Customer> getCustomerByPhone(@PathVariable("phone") String phone) {
-        Customer customer = customerRepository.findByPhone(phone);
+        Customer customer = customerService.getCustomerByPhone(phone);
         if (customer == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -34,6 +34,6 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
-        return ResponseEntity.ok(customerRepository.save(customer));
+        return ResponseEntity.ok(customerService.addCustomer(customer));
     }
 }

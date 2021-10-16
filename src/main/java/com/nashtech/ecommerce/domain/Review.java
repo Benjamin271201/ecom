@@ -16,6 +16,7 @@ import java.util.Date;
 @Entity @Table (name = "review")
 public class Review implements Serializable {
     @Id @Column (name = "id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne @JoinColumn (name = "customer_id")

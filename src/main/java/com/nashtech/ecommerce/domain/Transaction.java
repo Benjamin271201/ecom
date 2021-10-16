@@ -14,6 +14,7 @@ import java.util.Date;
 
 public @Data class Transaction implements Serializable {
     @Id @Column (name = "id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(optional = false) @JoinColumn(name = "customer_id")

@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Entity @Table (name = "address")
 
 public @Data class Address implements Serializable {
-    @Id @Column (name = "id")
+    @Id @Column (name = "id") @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(optional = false)

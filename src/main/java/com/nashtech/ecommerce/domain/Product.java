@@ -14,6 +14,7 @@ import java.io.Serializable;
 
 public @Data class Product implements Serializable {
     @Id @Column (name = "id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column (name = "product_name", unique = true)

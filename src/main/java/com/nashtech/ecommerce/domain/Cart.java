@@ -12,12 +12,12 @@ import java.io.Serializable;
 @Entity @Table (name = "cart")
 
 public @Data class Cart implements Serializable {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id")
     private int id;
 
-    @OneToOne @JoinColumn (name = "account_id")
-    private Account account;
+    @OneToOne @JoinColumn (name = "customer_id")
+    private Customer customer;
 
     @Column (name = "total")
     private long total;

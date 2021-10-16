@@ -12,11 +12,9 @@ import java.sql.Date;
 @Entity @Table (name = "account")
 public @Data
 class Account implements Serializable {
-    @Id
+    @Id @Column (name = "id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
-
-    @OneToOne (optional = false) @JoinColumn (name = "customer_id")
-    private Customer customer;
 
     @NotBlank (message = "Username cannot be empty!")
     @Pattern (regexp = "^[a-zA-Z0-9]{4,20}$")

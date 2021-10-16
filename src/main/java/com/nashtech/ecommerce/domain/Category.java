@@ -2,10 +2,7 @@ package com.nashtech.ecommerce.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -16,6 +13,7 @@ import java.io.Serializable;
 
 public @Data class Category implements Serializable {
     @Id @Column (name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column (name = "category_name", unique = true)

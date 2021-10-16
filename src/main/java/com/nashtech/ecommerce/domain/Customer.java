@@ -15,9 +15,12 @@ import java.io.Serializable;
 @Entity @Table (name = "customer")
 
 public @Data class Customer implements Serializable {
-    @Id
+    @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name = "id")
     private int id;
+
+    @OneToOne @JoinColumn (name = "account_id")
+    private Account account;
 
     @Column (name = "first_name")
     private String firstName;
