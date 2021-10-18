@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping ("/customer")
@@ -27,6 +28,15 @@ public class CustomerController {
     public ResponseEntity<Customer> getCustomerByPhone(@PathVariable("phone") String phone) {
         Customer customer = customerService.getCustomerByPhone(phone);
         if (customer == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(customer);
+    }
+
+    @GetMapping ("/{id}")
+    public ResponseEntity<Optional<Customer>> getCustomerInfoById(@PathVariable("id") int id) {
+        Optional<Customer> customer = customerService.getCustomerById(id);
+        if (customer.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(customer);

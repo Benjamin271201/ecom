@@ -8,14 +8,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity @Table (name = "liked_product")
+@Entity @Table (name = "liked_product", uniqueConstraints={@UniqueConstraint(columnNames = {"customer_id" , "product_id"})})
 
 public @Data class LikedProduct implements Serializable {
     @Id
+    private int id;
+
     @ManyToOne @JoinColumn (name = "customer_id")
     private Customer customer;
 
-    @Id
     @ManyToOne @JoinColumn (name = "product_id")
     private Product product;
 }

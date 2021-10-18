@@ -9,14 +9,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity @Table (name = "liked_review")
+@Entity @Table (name = "liked_review", uniqueConstraints={@UniqueConstraint(columnNames = {"customer_id" , "review_id"})})
 
 public @Data class LikedReview implements Serializable {
     @Id
+    private int id;
+
     @ManyToOne @JoinColumn (name = "customer_id")
     private Customer customer;
 
-    @Id
     @ManyToOne @JoinColumn (name = "review_id")
     private Review review;
 }

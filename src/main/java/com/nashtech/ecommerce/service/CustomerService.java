@@ -5,6 +5,7 @@ import com.nashtech.ecommerce.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -32,13 +33,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-//    public void deleteCustomer(int id) {
-//        customerRepository.deleteById(id);
-//    }
-
-//    public void deactiveCustomer (int id) {
-//        customerRepository.findById(id).ifPresent(customer -> {
-//            customer.setAccount();
-//        });
-//    }
+    public Optional<Customer> getCustomerById(int id) {
+        return customerRepository.findById(id);
+    }
 }

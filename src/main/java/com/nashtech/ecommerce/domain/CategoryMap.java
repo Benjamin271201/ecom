@@ -9,14 +9,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity @Table (name = "category_map")
+@Entity @Table (name = "category_map", uniqueConstraints={@UniqueConstraint(columnNames = {"product_id" , "category_id"})})
 
 public @Data class CategoryMap implements Serializable {
     @Id
+    private int id;
+
     @ManyToOne @JoinColumn(name = "product_id")
     private Product product;
 
-    @Id
     @ManyToOne @JoinColumn (name = "category_id")
     private Category category;
 }

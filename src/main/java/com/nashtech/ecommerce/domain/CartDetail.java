@@ -9,14 +9,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity @Table (name = "cart_detail")
+@Entity @Table (name = "cart_detail", uniqueConstraints={@UniqueConstraint(columnNames = {"cart_id" , "product_id"})})
 
 public @Data class CartDetail implements Serializable {
     @Id
+    private int id;
+
     @ManyToOne @JoinColumn (name = "cart_id")
     private Cart cart;
 
-    @Id
     @ManyToOne @JoinColumn (name = "product_id")
     private Product product;
 
