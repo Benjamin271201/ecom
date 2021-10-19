@@ -3,6 +3,8 @@ package com.nashtech.ecommerce.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -12,10 +14,16 @@ import java.io.Serializable;
 @Entity @Table (name = "category")
 
 public @Data class Category implements Serializable {
-    @Id @Column (name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @Column (name = "category_name", unique = true)
+    @Size (max = 126)
+    @Column(name = "category_name", unique = true)
+    @NotBlank (message = "Category name cannot be empty!")
     private String categoryName;
+
+    @Column (name = "is_active")
+    private boolean isActive;
 }
