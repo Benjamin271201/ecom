@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/brand")
+@RequestMapping("/api")
 public class BrandController {
     private final BrandService brandService;
 
@@ -17,27 +17,27 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @GetMapping
+    @GetMapping("/brand/all")
     public ResponseEntity<List<Brand>> getAllBrands() {
         return ResponseEntity.ok(brandService.getAllBrands());
     }
 
-    @PostMapping
+    @PostMapping("/brand/add")
     public ResponseEntity<Brand> addBrand(Brand brand) {
         return ResponseEntity.ok(brandService.addBrand(brand));
     }
 
-    @PutMapping("/update")
+    @PutMapping("/brand/update")
     public ResponseEntity<Optional<Brand>> updateBrandName(int id, String newName) {
         return ResponseEntity.ok(brandService.updateBrandName(id, newName));
     }
 
-    @PutMapping("/disable")
+    @PutMapping("/brand/disable")
     public ResponseEntity<Optional<Brand>> disableBrand(@RequestParam int id) {
         return ResponseEntity.ok(brandService.disableBrand(id));
     }
 
-    @PutMapping("/enable")
+    @PutMapping("/brand/enable")
     public ResponseEntity<Optional<Brand>> enableBrand(@RequestParam int id) {
         return ResponseEntity.ok(brandService.enableBrand(id));
     }

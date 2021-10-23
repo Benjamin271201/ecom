@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -17,27 +17,27 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
+    @GetMapping("/category/all")
     public ResponseEntity<List<Category>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
-    @PostMapping
-    public ResponseEntity<Category> addCategory(Category category) {
+    @PostMapping("/category/add")
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
         return ResponseEntity.ok(categoryService.addCategory(category));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Optional<Category>> updateCategoryName(int id, String newName) {
+    @PutMapping("/category/update")
+    public ResponseEntity<Optional<Category>> updateCategoryName(@RequestParam int id, String newName) {
         return ResponseEntity.ok(categoryService.updateCategoryName(id, newName));
     }
 
-    @PutMapping("/disable")
+    @PutMapping("/category/disable")
     public ResponseEntity<Optional<Category>> disableCategory(@RequestParam int id) {
         return ResponseEntity.ok(categoryService.disableCategory(id));
     }
 
-    @PutMapping("/enable")
+    @PutMapping("/category/enable")
     public ResponseEntity<Optional<Category>> enableCategory(@RequestParam int id) {
         return ResponseEntity.ok(categoryService.enableCategory(id));
     }

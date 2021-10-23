@@ -13,7 +13,7 @@ import java.sql.Date;
 public @Data
 class Account implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private int id;
 
     @NotBlank (message = "Username cannot be empty!")

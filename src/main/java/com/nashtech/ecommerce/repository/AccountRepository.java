@@ -7,11 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Modifying
     @Query ("UPDATE Account a SET a.isBanned = true WHERE a.id = :id")
-    public void deactiveAccount(@Param("id") int id);
+    public void deactivateAccount(@Param("id") int id);
 
     public boolean existsAccountByUsername (String username);
+
+    public Optional<Account> findAccountByUsername (String username);
 }

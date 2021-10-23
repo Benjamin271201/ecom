@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping ("/customer")
+@RequestMapping ("/api")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -19,13 +19,13 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping ("/all")
+    @GetMapping ("/customer/all")
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomer();
     }
 
-    @GetMapping ("/phone/{phone}")
-    public ResponseEntity<Customer> getCustomerByPhone(@PathVariable("phone") String phone) {
+    @GetMapping ("/customer/phone")
+    public ResponseEntity<Customer> getCustomerByPhone(@RequestParam String phone) {
         Customer customer = customerService.getCustomerByPhone(phone);
         if (customer == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -33,7 +33,7 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @GetMapping ("/{id}")
+    @GetMapping ("/customer/{id}")
     public ResponseEntity<Optional<Customer>> getCustomerInfoById(@PathVariable("id") int id) {
         Optional<Customer> customer = customerService.getCustomerById(id);
         if (customer.isEmpty()) {
@@ -42,7 +42,7 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @PostMapping
+    @PostMapping("/customer/add")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
         return ResponseEntity.ok(customerService.addCustomer(customer));
     }
