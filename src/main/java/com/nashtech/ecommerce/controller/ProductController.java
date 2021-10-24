@@ -27,4 +27,9 @@ public class ProductController {
         return ResponseEntity.ok(productService.searchProductsByName(keyword));
     }
 
+    @PostMapping("/product/add")
+    public Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
+    }
+
 }

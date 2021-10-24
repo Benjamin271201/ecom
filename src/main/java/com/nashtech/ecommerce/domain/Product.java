@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public @Data class Product implements Serializable {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @NotBlank (message = "Product price cannot be empty!")
+    @NotNull (message = "Product price cannot be empty!")
     @Column (name = "price")
     private long price;
 
@@ -40,7 +41,7 @@ public @Data class Product implements Serializable {
     @Column (name = "description")
     private String description;
 
-    @NotBlank (message = "Product quantity cannot be empty!")
+    @NotNull(message = "Product quantity cannot be empty!")
     @Column (name = "quantity")
     private int quantity;
 

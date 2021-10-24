@@ -21,4 +21,8 @@ public class ProductService {
     public List<Product> searchProductsByName(String keyword) {
         return productRepository.getProductByNameContains(keyword);
     }
+
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
 }

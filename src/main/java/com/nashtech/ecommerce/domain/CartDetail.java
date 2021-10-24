@@ -26,4 +26,8 @@ public @Data class CartDetail implements Serializable {
 
     @Column (name = "subtotal")
     private long subTotal;
+
+    public void setSubTotal() {
+        this.subTotal = product.getPrice() * quantity;
+    }
 }
