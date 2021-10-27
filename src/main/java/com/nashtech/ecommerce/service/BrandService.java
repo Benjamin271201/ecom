@@ -46,21 +46,31 @@ public class BrandService {
         return brand;
     }
 
-    public Optional<Brand> disableBrand(int id) {
+    public Optional<Brand> toggleBrandStatus(int id) {
         Optional<Brand> brand = findBrandById(id);
         brand.ifPresent(br -> {
-            br.setActive(false);
+            boolean isActive = br.isActive();
+            br.setActive(!isActive);
             brandRepository.save(br);
         });
         return brand;
     }
 
-    public Optional<Brand> enableBrand(int id) {
-        Optional<Brand> brand = findBrandById(id);
-        brand.ifPresent(br -> {
-            br.setActive(true);
-            brandRepository.save(br);
-        });
-        return brand;
-    }
+//    public Optional<Brand> disableBrand(int id) {
+//        Optional<Brand> brand = findBrandById(id);
+//        brand.ifPresent(br -> {
+//            br.setActive(false);
+//            brandRepository.save(br);
+//        });
+//        return brand;
+//    }
+//
+//    public Optional<Brand> enableBrand(int id) {
+//        Optional<Brand> brand = findBrandById(id);
+//        brand.ifPresent(br -> {
+//            br.setActive(true);
+//            brandRepository.save(br);
+//        });
+//        return brand;
+//    }
 }

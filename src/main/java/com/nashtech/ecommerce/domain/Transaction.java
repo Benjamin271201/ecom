@@ -14,7 +14,7 @@ import java.sql.Date;
 
 public @Data class Transaction implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private int id;
 
     @ManyToOne(optional = false) @JoinColumn(name = "customer_id")

@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Integer> {
     public Optional<Cart> findByCustomerId(int customerId);
+
+    public void deleteCartByCustomerId(int customerId);
 }

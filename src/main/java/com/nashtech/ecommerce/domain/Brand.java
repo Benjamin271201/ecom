@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 public @Data class Brand implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Size(max = 126)

@@ -3,12 +3,14 @@ package com.nashtech.ecommerce.service;
 import com.nashtech.ecommerce.domain.Cart;
 import com.nashtech.ecommerce.domain.CartDetail;
 import com.nashtech.ecommerce.domain.Customer;
+import com.nashtech.ecommerce.dto.CartDTO;
 import com.nashtech.ecommerce.exception.NotFoundException;
 import com.nashtech.ecommerce.repository.CartDetailRepository;
 import com.nashtech.ecommerce.repository.CartRepository;
 import com.nashtech.ecommerce.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -34,10 +36,11 @@ public class CartService {
                 .orElseThrow(() -> new NotFoundException(CART_NOT_FOUND));
     }
 
-    public Cart getCartByCustomerId(int customerId) {
-        return cartRepository
+    public CartDTO getCartByCustomerId(int customerId) {
+        Cart cart = cartRepository
                 .findByCustomerId(customerId)
                 .orElseThrow(() -> new NotFoundException(CART_NOT_FOUND));
+        return new CartDTO(cart);
     }
 
     public List<CartDetail> getCartDetailsByCustomerId(int customerId) {
@@ -48,15 +51,20 @@ public class CartService {
         Cart cart = new Cart(customerRepository
                 .findById(customerId)
                 .orElseThrow(() -> new NotFoundException(CUSTOMER_NOT_FOUND)));
+        cart.setCustomer(customerRepository.getById(customerId));
+        cart.setTotal(0);
         return cartRepository.save(cart);
     }
 
-    public void deleteCart(int customerId) {
-        //find cart by customer id
-        Cart cart = getCartByCustomerId(customerId);
-        //delete cart details of the cart based on cartId
-        cartDetailRepository.deleteAllByCartId(cart.getId());
-        //delete cart
-        cartRepository.delete(cart);
+    public Cart updateCart(Cart cart) {
+        cartRepository
+                .findById(cart.getId())
+                .orElseThrow(() -> new NotFoundException(CART_NOT_FOUND));
+        return cartRepository.save(cart);
+    }
+
+    @Transactional
+    public void deleteCartByCustomerId(int customerId) {
+        cartRepository.deleteCartByCustomerId(customerId);
     }
 }

@@ -16,7 +16,7 @@ import java.sql.Date;
 @Entity @Table (name = "review")
 public class Review implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private int id;
 
     @ManyToOne @JoinColumn (name = "customer_id")

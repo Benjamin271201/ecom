@@ -1,4 +1,4 @@
-package com.nashtech.ecommerce.service.dto;
+package com.nashtech.ecommerce.dto;
 
 import com.nashtech.ecommerce.domain.Customer;
 import lombok.Data;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.List;
 
 @NoArgsConstructor @Getter @Setter
 public @Data class AccountInfoDTO {

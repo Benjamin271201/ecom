@@ -1,6 +1,7 @@
 package com.nashtech.ecommerce.service;
 
 import com.nashtech.ecommerce.domain.Product;
+import com.nashtech.ecommerce.exception.NotFoundException;
 import com.nashtech.ecommerce.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,9 @@ import java.util.List;
 
 @Service
 public class ProductService {
+    //Errors
+    private static final String PRODUCT_NOT_FOUND = "Product not found!";
+
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
@@ -24,5 +28,11 @@ public class ProductService {
 
     public Product addProduct(Product product) {
         return productRepository.save(product);
+    }
+
+    public Product getProductById(int id) {
+        return productRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException(PRODUCT_NOT_FOUND));
     }
 }

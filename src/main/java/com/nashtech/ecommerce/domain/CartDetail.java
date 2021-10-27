@@ -1,5 +1,6 @@
 package com.nashtech.ecommerce.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,9 +14,12 @@ import java.io.Serializable;
 
 public @Data class CartDetail implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
+    @EqualsAndHashCode.Exclude
     @ManyToOne @JoinColumn (name = "cart_id")
+    @JsonBackReference
     private Cart cart;
 
     @ManyToOne @JoinColumn (name = "product_id")

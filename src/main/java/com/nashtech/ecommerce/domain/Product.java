@@ -16,7 +16,7 @@ import java.util.List;
 
 public @Data class Product implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column (name = "product_name", unique = true)
@@ -26,10 +26,6 @@ public @Data class Product implements Serializable {
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
-
-    @ManyToOne (optional = false)
-    @JoinColumn(name = "category_id")
-    private Category category;
 
     @NotNull (message = "Product price cannot be empty!")
     @Column (name = "price")
@@ -41,9 +37,9 @@ public @Data class Product implements Serializable {
     @Column (name = "description")
     private String description;
 
-    @NotNull(message = "Product quantity cannot be empty!")
-    @Column (name = "quantity")
-    private int quantity;
+    @NotNull(message = "Product stock cannot be empty!")
+    @Column (name = "stock")
+    private int stock;
 
     @Column (name = "is_active")
     boolean isActive;

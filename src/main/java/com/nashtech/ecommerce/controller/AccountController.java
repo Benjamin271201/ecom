@@ -10,58 +10,59 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping ("/api/account-management")
 public class AccountController {
     private final AccountService accountService;
 
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
+//
+//    @GetMapping(value = "/accounts/id")
+//    public Account getAccountById(@RequestParam int id) {
+//        return accountService.findAccountById(id);
+//    }
 
-    @GetMapping(value = "/account/find", params = {"id"})
-    public Account getAccountById(@RequestParam("id") int id) {
-        return accountService.findAccountById(id);
-    }
-
-    @GetMapping(value = "/account/find", params = {"u"})
-    public Account getAccountByUsername(@RequestParam("u") String username) {
+    @GetMapping(value = "/accounts/")
+    public Account getAccountByUsername(@RequestParam String username) {
         return accountService.findAccountByUsername(username);
     }
 
-    @GetMapping("/account/all")
+    @GetMapping("/accounts/all")
     public List<Account> getAllAccounts() {
         return accountService.getAllAccount();
     }
 
-    @PostMapping("/account/add/customer")
+    @PostMapping("/accounts/customers")
     public ResponseEntity<Account> addCustomerAccount(@RequestBody Account account) throws Exception {
         Account result = accountService.addCustomerAccount(account);
         return ResponseEntity.created(new URI("/api/find/id" +result.getId())).body(result);
     }
 
-    @PostMapping("/account/add/admin")
+    @PostMapping("/accounts/admins")
     public ResponseEntity<Account> addAdminAccount(@RequestBody Account account) throws Exception {
         Account result = accountService.addAdminAccount(account);
         return ResponseEntity.created(new URI("/api/find/id" + result.getId())).body(result);
     }
 
-    @PutMapping("/account/update/username")
+    @PostMapping("/login")
+    public Account login(@RequestParam String username, @RequestParam String password) throws FailedLoginException {
+        return accountService.login(username, password);
+    }
+
+    @PutMapping("/accounts/username")
     public Account updateUsername(@RequestBody Account account) {
         return accountService.updateUsername(account, account.getUsername());
     }
 
-    @PutMapping("/account/update/password")
+    @PutMapping("/accounts/password")
     public Account updatePassword(@RequestBody Account account) {
         return accountService.updatePassword(account, account.getPassword());
     }
 
-    @PutMapping("/account/disable")
+    @DeleteMapping("/accounts/id")
     public void deactivateAccount(@RequestParam int id) {
         accountService.deactivateAccount(id);
     }
 
-    @PostMapping("/account/login")
-    public Account login(@RequestParam String username, @RequestParam String password) throws FailedLoginException {
-        return accountService.login(username, password);
-    }
 }

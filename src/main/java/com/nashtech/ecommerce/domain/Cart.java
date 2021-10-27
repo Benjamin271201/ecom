@@ -1,5 +1,6 @@
 package com.nashtech.ecommerce.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,14 +16,18 @@ import java.util.Set;
 @Entity @Table (name = "cart")
 
 public @Data class Cart implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @Column (name = "id")
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @OneToOne @JoinColumn (name = "customer_id")
+    @OneToOne
+    @JoinColumn (name = "customer_id")
     private Customer customer;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany (mappedBy = "cart", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private Set<CartDetail> details;
 
     @Column (name = "total")

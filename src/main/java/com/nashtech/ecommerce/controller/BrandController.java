@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/brand-management")
 public class BrandController {
     private final BrandService brandService;
 
@@ -17,28 +17,28 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @GetMapping("/brand/all")
+    @GetMapping("/brands/all")
     public ResponseEntity<List<Brand>> getAllBrands() {
         return ResponseEntity.ok(brandService.getAllBrands());
     }
 
-    @PostMapping("/brand/add")
+    @PostMapping("/brands")
     public ResponseEntity<Brand> addBrand(Brand brand) {
         return ResponseEntity.ok(brandService.addBrand(brand));
     }
 
-    @PutMapping("/brand/update")
+    @PutMapping("/brands")
     public ResponseEntity<Optional<Brand>> updateBrandName(int id, String newName) {
         return ResponseEntity.ok(brandService.updateBrandName(id, newName));
     }
 
-    @PutMapping("/brand/disable")
-    public ResponseEntity<Optional<Brand>> disableBrand(@RequestParam int id) {
-        return ResponseEntity.ok(brandService.disableBrand(id));
+    @DeleteMapping("/brands")
+    public ResponseEntity<Optional<Brand>> toggleBrandStatus(@RequestParam int id) {
+        return ResponseEntity.ok(brandService.toggleBrandStatus(id));
     }
 
-    @PutMapping("/brand/enable")
-    public ResponseEntity<Optional<Brand>> enableBrand(@RequestParam int id) {
-        return ResponseEntity.ok(brandService.enableBrand(id));
-    }
+//    @PutMapping("/brand/enable")
+//    public ResponseEntity<Optional<Brand>> enableBrand(@RequestParam int id) {
+//        return ResponseEntity.ok(brandService.enableBrand(id));
+//    }
 }

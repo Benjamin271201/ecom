@@ -1,16 +1,14 @@
 package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Cart;
-import com.nashtech.ecommerce.domain.CartDetail;
-import com.nashtech.ecommerce.domain.Customer;
+import com.nashtech.ecommerce.dto.CartDTO;
 import com.nashtech.ecommerce.service.CartDetailService;
 import com.nashtech.ecommerce.service.CartService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cart-management")
 public class CartController {
     private final CartService cartService;
     private final CartDetailService cartDetailService;
@@ -20,19 +18,23 @@ public class CartController {
         this.cartDetailService = cartDetailService;
     }
 
-    @GetMapping("/cart/uid")
-    public List<CartDetail> getCartDetailsByCustomerId(@RequestParam int customerId) {
-        return cartService.getCartDetailsByCustomerId(customerId);
+//    @GetMapping("/carts")
+//    public List<CartDetail> getCartDetailsByCustomerId(@RequestParam int customerId) {
+//        return cartService.getCartDetailsByCustomerId(customerId);
+//    }
+
+    @GetMapping("/carts")
+    public CartDTO getCartByCustomerId(@RequestParam int customerId) {
+        return cartService.getCartByCustomerId(customerId);
     }
 
-    @PostMapping("/cart/add")
+    @PostMapping("/carts")
     public Cart createCart(@RequestParam int customerId) {
         return cartService.createCart(customerId);
     }
 
-    @DeleteMapping("/cart/uid")
+    @DeleteMapping("/carts")
     public void deleteCartByCustomerId(@RequestParam int customerId) {
-        cartService.deleteCart(customerId);
+        cartService.deleteCartByCustomerId(customerId);
     }
-
 }
