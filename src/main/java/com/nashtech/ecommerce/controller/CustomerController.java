@@ -1,6 +1,7 @@
 package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Customer;
+import com.nashtech.ecommerce.dto.CustomerDTO;
 import com.nashtech.ecommerce.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping ("/api/customer-management")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -19,31 +20,23 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping ("/customer/all")
+    @GetMapping ("/customers/all")
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomer();
     }
 
-    @GetMapping ("/customer/phone")
-    public ResponseEntity<Customer> getCustomerByPhone(@RequestParam String phone) {
-        Customer customer = customerService.getCustomerByPhone(phone);
-        if (customer == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(customer);
+    @GetMapping ("/customers/phone")
+    public Customer getCustomerByPhone(@RequestParam String phone) {
+        return customerService.getCustomerByPhone(phone);
     }
 
-    @GetMapping ("/customer/{id}")
-    public ResponseEntity<Optional<Customer>> getCustomerInfoById(@PathVariable("id") int id) {
-        Optional<Customer> customer = customerService.getCustomerById(id);
-        if (customer.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(customer);
+    @GetMapping ("/customers/id")
+    public Customer getCustomerById(@RequestParam int id) {
+        return customerService.getCustomerById(id);
     }
 
-    @PostMapping("/customer/add")
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
-        return ResponseEntity.ok(customerService.addCustomer(customer));
+    @PostMapping()
+    public CustomerDTO addCustomer(@RequestBody CustomerDTO customerDTO) {
+        return customerService.addCustomer(customerDTO);
     }
 }

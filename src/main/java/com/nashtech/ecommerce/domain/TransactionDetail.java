@@ -1,5 +1,6 @@
 package com.nashtech.ecommerce.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +16,8 @@ public @Data class TransactionDetail implements Serializable {
 
     @Getter @Setter
     @ManyToOne @JoinColumn (name = "transaction_id")
+    @JsonBackReference
+    @EqualsAndHashCode.Exclude
     private Transaction transaction;
 
     @Getter @Setter

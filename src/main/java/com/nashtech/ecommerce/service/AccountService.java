@@ -16,7 +16,8 @@ import java.util.List;
 public class AccountService {
     //Errors
     private static final String ACC_NOT_FOUND = "Account not found!";
-    private static final String USERNAME_NOT_FOUND = "Username not found!";
+//    private static final String USERNAME_NOT_FOUND = "Username not found!";
+    private static final String USERNAME_ALREADY_EXISTS = "Username already exists!";
 
 
     //Constructor
@@ -43,9 +44,9 @@ public class AccountService {
 
     public Account addCustomerAccount(Account customerAccount) {
         if (existsAccountByUsername(customerAccount.getUsername())) {
-            throw new AlreadyExistsException(USERNAME_NOT_FOUND);
+            throw new AlreadyExistsException(USERNAME_ALREADY_EXISTS);
         }
-        customerAccount.setJoinDate(Date.valueOf(LocalDate.now()));
+        customerAccount.setJoinDate();
         customerAccount.setAdmin(false);
         customerAccount.setBanned(false);
         return accountRepository.save(customerAccount);
@@ -53,7 +54,7 @@ public class AccountService {
 
     public Account addAdminAccount(Account adminAccount) {
         if (existsAccountByUsername(adminAccount.getUsername())) {
-            throw new AlreadyExistsException(USERNAME_NOT_FOUND);
+            throw new AlreadyExistsException(USERNAME_ALREADY_EXISTS);
         }
         adminAccount.setJoinDate(Date.valueOf(LocalDate.now()));
         adminAccount.setAdmin(true);
@@ -77,7 +78,7 @@ public class AccountService {
         if (!account.getUsername().equals(newUsername)) {
             //check if username exists
             if (existsAccountByUsername(newUsername)) {
-                throw new AlreadyExistsException(USERNAME_NOT_FOUND);
+                throw new AlreadyExistsException(USERNAME_ALREADY_EXISTS);
             }
             account.setUsername(newUsername);
         }

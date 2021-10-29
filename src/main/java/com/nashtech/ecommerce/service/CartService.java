@@ -51,8 +51,6 @@ public class CartService {
         Cart cart = new Cart(customerRepository
                 .findById(customerId)
                 .orElseThrow(() -> new NotFoundException(CUSTOMER_NOT_FOUND)));
-        cart.setCustomer(customerRepository.getById(customerId));
-        cart.setTotal(0);
         return cartRepository.save(cart);
     }
 

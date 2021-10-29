@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 @Entity @Table (name = "account")
@@ -34,4 +35,8 @@ class Account implements Serializable {
 
     @Column (name = "is_banned")
     private boolean isBanned;
+
+    public void setJoinDate() {
+        this.joinDate = Date.valueOf(LocalDate.now());
+    }
 }

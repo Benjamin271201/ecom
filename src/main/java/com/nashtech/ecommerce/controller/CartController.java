@@ -18,11 +18,6 @@ public class CartController {
         this.cartDetailService = cartDetailService;
     }
 
-//    @GetMapping("/carts")
-//    public List<CartDetail> getCartDetailsByCustomerId(@RequestParam int customerId) {
-//        return cartService.getCartDetailsByCustomerId(customerId);
-//    }
-
     @GetMapping("/carts")
     public CartDTO getCartByCustomerId(@RequestParam int customerId) {
         return cartService.getCartByCustomerId(customerId);

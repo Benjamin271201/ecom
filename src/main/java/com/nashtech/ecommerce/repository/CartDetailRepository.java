@@ -18,6 +18,9 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Integer>
     @Query("SELECT detail.product FROM CartDetail detail WHERE detail.cart.id = :id")
     public Optional<Product> getProductByCartId(@Param("id") int cartId);
 
+    @Query("SELECT detail.product FROM CartDetail detail WHERE detail.id = :id")
+    public Optional<Product> getProductByCartDetailId(@Param("id") int id);
+
     public Optional<CartDetail> getCartDetailByCartIdAndProductId(int cartId, int productId);
 
     public void deleteAllByCartId(int cartId);

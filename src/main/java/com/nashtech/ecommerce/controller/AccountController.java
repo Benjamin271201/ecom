@@ -23,8 +23,8 @@ public class AccountController {
 //        return accountService.findAccountById(id);
 //    }
 
-    @GetMapping(value = "/accounts/")
-    public Account getAccountByUsername(@RequestParam String username) {
+    @GetMapping(value = "/accounts")
+    public Account getAccountByUsername(@RequestParam String username){
         return accountService.findAccountByUsername(username);
     }
 
@@ -64,5 +64,4 @@ public class AccountController {
     public void deactivateAccount(@RequestParam int id) {
         accountService.deactivateAccount(id);
     }
-
 }

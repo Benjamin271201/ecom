@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -25,6 +27,8 @@ public @Data class CartDetail implements Serializable {
     @ManyToOne @JoinColumn (name = "product_id")
     private Product product;
 
+    @Min(value = 1, message = "Quantity must be greater than 0!")
+    @Max(value = 50, message = "Quantity must be lower than 50!")
     @Column (name = "quantity")
     private int quantity;
 

@@ -1,12 +1,12 @@
 package com.nashtech.ecommerce.domain;
 
+import com.nashtech.ecommerce.dto.CustomerDTO;
+import com.nashtech.ecommerce.repository.AccountRepository;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @NoArgsConstructor @AllArgsConstructor
@@ -23,9 +23,11 @@ public @Data class Customer implements Serializable {
     private Account account;
 
     @Column (name = "first_name")
+    @NotBlank (message = "First name cannot be empty!")
     private String firstName;
 
     @Column (name = "last_name")
+    @NotBlank (message = "Last name cannot be empty!")
     private String lastName;
 
     @Email @Column (name = "email", unique = true)
@@ -34,4 +36,5 @@ public @Data class Customer implements Serializable {
 
     @Pattern(regexp = "[0-9]{4,19}") @Column (name = "phone", unique = true)
     private String phone;
+
 }

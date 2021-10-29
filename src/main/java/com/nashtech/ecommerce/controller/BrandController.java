@@ -17,28 +17,28 @@ public class BrandController {
         this.brandService = brandService;
     }
 
+    @GetMapping("/brands")
+    public Brand getBrandById(int id) {
+        return brandService.findBrandById(id);
+    }
+
     @GetMapping("/brands/all")
-    public ResponseEntity<List<Brand>> getAllBrands() {
-        return ResponseEntity.ok(brandService.getAllBrands());
+    public List<Brand> getAllBrands() {
+        return brandService.getAllBrands();
     }
 
     @PostMapping("/brands")
-    public ResponseEntity<Brand> addBrand(Brand brand) {
-        return ResponseEntity.ok(brandService.addBrand(brand));
+    public Brand addBrand(String name) {
+        return brandService.addBrand(name);
     }
 
     @PutMapping("/brands")
-    public ResponseEntity<Optional<Brand>> updateBrandName(int id, String newName) {
-        return ResponseEntity.ok(brandService.updateBrandName(id, newName));
+    public Brand updateBrandName(int id, String newName) {
+        return brandService.updateBrandName(id, newName);
     }
 
     @DeleteMapping("/brands")
-    public ResponseEntity<Optional<Brand>> toggleBrandStatus(@RequestParam int id) {
-        return ResponseEntity.ok(brandService.toggleBrandStatus(id));
+    public Brand toggleBrandStatus(@RequestParam int id) {
+        return brandService.updateBrandStatus(id);
     }
-
-//    @PutMapping("/brand/enable")
-//    public ResponseEntity<Optional<Brand>> enableBrand(@RequestParam int id) {
-//        return ResponseEntity.ok(brandService.enableBrand(id));
-//    }
 }

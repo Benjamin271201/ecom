@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.sql.Date;
 
 @NoArgsConstructor @Getter @Setter
-public @Data class AccountInfoDTO {
+public @Data class AccountDTO {
     private int id;
     private String firstName;
     private String lastName;
@@ -18,7 +18,7 @@ public @Data class AccountInfoDTO {
     private String phone;
     private Date joinDate;
 
-    public AccountInfoDTO(Customer customer) {
+    public AccountDTO(Customer customer) {
         this.id = customer.getId();
         this.firstName = customer.getFirstName();
         this.lastName = customer.getLastName();

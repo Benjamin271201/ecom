@@ -2,6 +2,7 @@ package com.nashtech.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +19,6 @@ import java.util.Set;
 public @Data class Cart implements Serializable {
     @Id
     @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private int id;
 
     @OneToOne
@@ -34,6 +34,7 @@ public @Data class Cart implements Serializable {
     private long total;
 
     public Cart(Customer customer) {
+        this.id = customer.getId();
         this.customer = customer;
         this.details = new HashSet<>();
         this.total = 0;
