@@ -5,6 +5,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class ConstraintViolationException extends ResponseStatusException {
     public ConstraintViolationException(String reason) {
-        super(HttpStatus.NOT_FOUND, reason);
+        super(HttpStatus.BAD_REQUEST, reason);
     }
 }

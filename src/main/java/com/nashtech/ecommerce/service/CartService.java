@@ -24,7 +24,7 @@ public class CartService {
     private final CartDetailRepository cartDetailRepository;
     private final CustomerRepository customerRepository;
     public CartService(CartRepository cartRepository, CartDetailRepository cartDetailRepository
-            , CustomerRepository customerRepository) {
+            ,CustomerRepository customerRepository) {
         this.cartRepository = cartRepository;
         this.cartDetailRepository = cartDetailRepository;
         this.customerRepository = customerRepository;
@@ -59,6 +59,11 @@ public class CartService {
                 .findById(cart.getId())
                 .orElseThrow(() -> new NotFoundException(CART_NOT_FOUND));
         return cartRepository.save(cart);
+    }
+
+    public boolean existsByCartId(int id) {
+        return cartRepository
+                .existsById(id);
     }
 
     @Transactional

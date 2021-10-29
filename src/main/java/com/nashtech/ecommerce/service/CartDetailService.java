@@ -32,6 +32,10 @@ public class CartDetailService {
     //customer add cartDetail -> add cart -> add cartDetail
     public CartDetailDTO addCartDetail(CartDetailDTO cartDetailDTO) {
         Product product = productService.getProductById(cartDetailDTO.getProductId());
+        //if cart does not exists, create a new one
+//        if (!cartService.existsByCartId(cartDetailDTO.getCartId())) {
+//            Cart cart = cartService.createCart(cartDetailDTO.getCartId());
+//        } else {
         Cart cart = cartService.getCartById(cartDetailDTO.getCartId());
         Optional<CartDetail> cartDetail = getCartDetailByCartIdAndProductId(cartDetailDTO);
         long total = cart.getTotal();

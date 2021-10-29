@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.validation.ConstraintViolationException;
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = NotFoundException.class)
@@ -31,6 +29,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ConstraintViolationException.class)
     public ResponseEntity handleConstraintViolationException(ConstraintViolationException exception) {
-        return new ResponseEntity<>(exception.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

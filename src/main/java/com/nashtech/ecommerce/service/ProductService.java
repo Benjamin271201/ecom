@@ -35,4 +35,9 @@ public class ProductService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(PRODUCT_NOT_FOUND));
     }
+
+    //
+    public void updateProductStock(int productId, int newStock) {
+        productRepository.updateProductStock(productId, newStock);
+    }
 }

@@ -14,4 +14,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     public List<Product> getAllProduct();
 
     public List<Product> getProductByNameContains(String keyword);
+
+    @Modifying
+    @Query ("UPDATE Product p SET p.stock = :newStock WHERE p.id = :id")
+    public void updateProductStock(int id, int newStock);
 }
