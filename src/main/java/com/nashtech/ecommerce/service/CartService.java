@@ -62,8 +62,7 @@ public class CartService {
     }
 
     public boolean existsByCartId(int id) {
-        return cartRepository
-                .existsById(id);
+        return cartRepository.existsById(id);
     }
 
     @Transactional

@@ -20,8 +20,8 @@ public @Data class CartDetail implements Serializable {
     private int id;
 
     @EqualsAndHashCode.Exclude
-    @ManyToOne @JoinColumn (name = "cart_id")
     @JsonBackReference
+    @ManyToOne @JoinColumn (name = "cart_id")
     private Cart cart;
 
     @ManyToOne @JoinColumn (name = "product_id")

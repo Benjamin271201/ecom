@@ -5,6 +5,7 @@ import com.nashtech.ecommerce.domain.CartDetail;
 import com.nashtech.ecommerce.domain.Product;
 import com.nashtech.ecommerce.dto.CartDTO;
 import com.nashtech.ecommerce.dto.CartDetailDTO;
+import com.nashtech.ecommerce.exception.ConstraintViolationException;
 import com.nashtech.ecommerce.exception.NotFoundException;
 import com.nashtech.ecommerce.repository.CartDetailRepository;
 import org.springframework.stereotype.Service;
@@ -32,15 +33,23 @@ public class CartDetailService {
     //customer add cartDetail -> add cart -> add cartDetail
     public CartDetailDTO addCartDetail(CartDetailDTO cartDetailDTO) {
         Product product = productService.getProductById(cartDetailDTO.getProductId());
-        //if cart does not exists, create a new one
-//        if (!cartService.existsByCartId(cartDetailDTO.getCartId())) {
-//            Cart cart = cartService.createCart(cartDetailDTO.getCartId());
-//        } else {
-        Cart cart = cartService.getCartById(cartDetailDTO.getCartId());
+        //check if buying quantity > in-stock
+        int newStock = product.getStock() - cartDetailDTO.getQuantity();
+        //if buying quantity > stock -> ex
+        if (newStock < 0) {
+            throw new ConstraintViolationException(product.getName() + " cannot be purchase due to in-stock limitation!");
+        }
+        Cart cart;
+        // if cart does not exists, create a new one
+        if (!cartService.existsByCartId(cartDetailDTO.getCartId())) {
+            cart = cartService.createCart(cartDetailDTO.getCartId());
+        } else {
+            cart = cartService.getCartById(cartDetailDTO.getCartId());
+        }
         Optional<CartDetail> cartDetail = getCartDetailByCartIdAndProductId(cartDetailDTO);
+
         long total = cart.getTotal();
         long subTotal = cartDetailDTO.getQuantity() * product.getPrice();
-
         cart.setTotal(total + subTotal);
         cartService.updateCart(cart);
         //item alr exists in cart
@@ -98,6 +107,14 @@ public class CartDetailService {
     }
 
     public void removeCartDetail(int id) {
+        //subtract product's subtotal from cart's total
+        CartDetail cartDetail = cartDetailRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException(DETAIL_NOT_FOUND));
+        Cart cart = cartService.getCartById(cartDetail.getCart().getId());
+        cart.setTotal(cart.getTotal() - cartDetail.getSubTotal());
+        cartService.updateCart(cart);
+        //remove cart detail
         cartDetailRepository.deleteById(id);
     }
 }

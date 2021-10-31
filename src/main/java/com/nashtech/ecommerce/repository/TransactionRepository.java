@@ -15,4 +15,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     @Modifying
     @Query ("UPDATE Transaction t SET t.status = :status WHERE t.id = :id")
     public void updateTransactionStatus(int id, String status);
+
+    public List<Transaction> getTransactionsByCustomerId(int id);
 }

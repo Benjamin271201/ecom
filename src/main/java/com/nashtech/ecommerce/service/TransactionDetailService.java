@@ -18,9 +18,8 @@ public class TransactionDetailService {
         this.transactionRepository = transactionRepository;
     }
 
-    //add transaction details from cart
-//    public List<TransactionDetail> addTransactionDetails(Cart cart) {
-//
+    //TODO: get the number of purchased products by productid
+//    public int getPurchasedByProductId(int productId) {
+//        transactionRepository.;
 //    }
-
 }

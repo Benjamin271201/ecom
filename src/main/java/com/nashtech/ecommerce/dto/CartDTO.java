@@ -11,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 public @Data class CartDTO {
+    //TODO: set constraints
     private int customerId;
     private Set<CartDetailDTO> details;
     private long total;

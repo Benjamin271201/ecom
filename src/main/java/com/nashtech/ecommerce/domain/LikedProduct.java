@@ -1,4 +1,5 @@
 package com.nashtech.ecommerce.domain;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,8 +16,12 @@ public @Data class LikedProduct implements Serializable {
     private int id;
 
     @ManyToOne @JoinColumn (name = "customer_id")
+    @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private Customer customer;
 
     @ManyToOne @JoinColumn (name = "product_id")
+    @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private Product product;
 }

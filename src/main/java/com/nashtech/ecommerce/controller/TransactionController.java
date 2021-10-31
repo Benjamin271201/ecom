@@ -1,6 +1,7 @@
 package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Transaction;
+import com.nashtech.ecommerce.dto.TransactionDTO;
 import com.nashtech.ecommerce.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +17,28 @@ public class TransactionController {
     }
 
     @GetMapping("/transactions/all")
-    public List<Transaction> getAllTransactions() {
+    public List<TransactionDTO> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
     @GetMapping("/transactions/status")
-    public List<Transaction> getTransactionsByStatus(@RequestParam String status) {
+    public List<TransactionDTO> getTransactionsByStatus(@RequestParam String status) {
         return transactionService.getTransactionsByStatus(status);
+    }
+
+    @GetMapping("/transactions/customer")
+    public List<TransactionDTO> getTransactionsByCustomerId(@RequestParam int customerId) {
+        return transactionService.getTransactionsByCustomerId(customerId);
+    }
+
+    @GetMapping("/transactions")
+    public TransactionDTO getTransactionsById(@RequestParam int id) {
+        return transactionService.getTransactionById(id);
     }
 
     //checkout
     @PostMapping("")
-    public Transaction createTransaction(@RequestParam int customerId) {
+    public TransactionDTO createTransaction(@RequestParam int customerId) {
         return transactionService.createTransaction(customerId);
     }
 

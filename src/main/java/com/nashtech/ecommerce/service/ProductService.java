@@ -1,11 +1,13 @@
 package com.nashtech.ecommerce.service;
 
 import com.nashtech.ecommerce.domain.Product;
+import com.nashtech.ecommerce.dto.ProductDTO;
 import com.nashtech.ecommerce.exception.NotFoundException;
 import com.nashtech.ecommerce.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 public class ProductService {
@@ -18,16 +20,16 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.getAllProduct();
+    public List<ProductDTO> getAllProducts() {
+        return productRepository.findAll().stream().map(ProductDTO::new).toList();
     }
 
-    public List<Product> searchProductsByName(String keyword) {
-        return productRepository.getProductByNameContains(keyword);
+    public List<ProductDTO> searchProductsByName(String keyword) {
+        return productRepository.getProductByNameContains(keyword).stream().map(ProductDTO::new).toList();
     }
 
-    public Product addProduct(Product product) {
-        return productRepository.save(product);
+    public ProductDTO addProduct(Product product) {
+        return new ProductDTO(productRepository.save(product));
     }
 
     public Product getProductById(int id) {
@@ -36,7 +38,6 @@ public class ProductService {
                 .orElseThrow(() -> new NotFoundException(PRODUCT_NOT_FOUND));
     }
 
-    //
     public void updateProductStock(int productId, int newStock) {
         productRepository.updateProductStock(productId, newStock);
     }
