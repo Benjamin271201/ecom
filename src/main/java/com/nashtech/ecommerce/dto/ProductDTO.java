@@ -22,6 +22,7 @@ public @Data class ProductDTO {
     private float rating;
     private String description;
     private int stock;
+    private int sold;
     private Set<ReviewDTO> reviews;
     private boolean isActive;
     private int likes;
@@ -35,6 +36,7 @@ public @Data class ProductDTO {
         this.price = product.getPrice();
         this.description = product.getDescription();
         this.stock = product.getStock();
+        this.sold = product.getSold();
         this.reviews = new HashSet<>();
         this.isActive = product.isActive();
         this.rating = 0;

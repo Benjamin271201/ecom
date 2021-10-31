@@ -15,9 +15,11 @@ public class ProductService {
     private static final String PRODUCT_NOT_FOUND = "Product not found!";
 
     private final ProductRepository productRepository;
+    private final TransactionDetailService transactionDetailService;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, TransactionDetailService transactionDetailService) {
         this.productRepository = productRepository;
+        this.transactionDetailService = transactionDetailService;
     }
 
     public List<ProductDTO> getAllProducts() {
@@ -28,6 +30,7 @@ public class ProductService {
         return productRepository.getProductByNameContains(keyword).stream().map(ProductDTO::new).toList();
     }
 
+    //TODO: create a product form to limit the fields needed
     public ProductDTO addProduct(Product product) {
         return new ProductDTO(productRepository.save(product));
     }
@@ -40,5 +43,9 @@ public class ProductService {
 
     public void updateProductStock(int productId, int newStock) {
         productRepository.updateProductStock(productId, newStock);
+    }
+
+    public void updateSold(int productId, int totalSoldNumber) {
+        productRepository.updateProductSold(productId, totalSoldNumber);
     }
 }

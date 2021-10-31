@@ -41,11 +41,13 @@ public class TransactionService {
         //customerId == cartId
         Cart cart = cartService.getCartById(customerId);
         Transaction transaction = new Transaction(cart);
-        //update the in-stock of the bought products
+        //update the in-stock/sold of the bought products
         cart.getDetails().forEach(cartDetail -> {
             Product product = cartDetail.getProduct();
             int newStock = product.getStock() - cartDetail.getQuantity();
-            productService.updateProductStock(cartDetail.getProduct().getId(), newStock);
+            int totalSoldNumber = product.getSold() + cartDetail.getQuantity();
+            productService.updateProductStock(product.getId(), newStock);
+            productService.updateSold(product.getId(), totalSoldNumber);
         });
         //save transactions into db
         transactionRepository.save(transaction);
@@ -105,12 +107,14 @@ public class TransactionService {
                     if (isSucceed) {
                         transactionRepository.updateTransactionStatus(id, TransactionStatusConstants.SUCCEED);
                     } else {
-                        //if failed -> set product back to the original quantity
+                        //if failed -> set product quantity/sold back to the original number
                         transactionRepository.updateTransactionStatus(id, TransactionStatusConstants.FAILED);
                         tran.getDetails().forEach(transactionDetail -> {
                             Product product = transactionDetail.getProduct();
                             int newStock = product.getStock() + transactionDetail.getQuantity();
+                            int newSold = product.getSold() - transactionDetail.getQuantity();
                             productService.updateProductStock(product.getId(), newStock);
+                            productService.updateSold(product.getId(), newSold);
                         });
                     }
                 },

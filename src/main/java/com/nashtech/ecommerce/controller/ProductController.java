@@ -21,13 +21,9 @@ public class ProductController {
         this.transactionDetailService = transactionDetailService;
     }
 
-    //TODO: add purchased
     @GetMapping("/product/all")
     public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
-//        return productService.getAllProducts().stream().map(
-//                productDTO -> productDTO.setPurchased(transactionDetailService.getPurchasedByProductId(productDTO.getId()))
-//        ).toList();
     }
 
     @GetMapping("/product/search/{keyword}")

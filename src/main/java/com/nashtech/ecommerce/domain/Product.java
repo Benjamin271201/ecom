@@ -44,6 +44,9 @@ public @Data class Product implements Serializable {
     @Column (name = "stock")
     private int stock;
 
+    @Column (name = "sold")
+    private int sold;
+
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     @JsonManagedReference
