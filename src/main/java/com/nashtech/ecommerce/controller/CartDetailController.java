@@ -3,6 +3,7 @@ package com.nashtech.ecommerce.controller;
 import com.nashtech.ecommerce.domain.Product;
 import com.nashtech.ecommerce.dto.CartDetailDTO;
 import com.nashtech.ecommerce.service.CartDetailService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,24 +15,22 @@ public class CartDetailController {
         this.cartDetailService = cartDetailService;
     }
 
-    @GetMapping("/details")
-    public Product getProductFromCartDetailId(@RequestBody int id) {
+    @GetMapping("/details/{id}/product")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
+    public Product getProductFromCartDetailId(@PathVariable("id") int id) {
         return cartDetailService.getProductByCartDetailId(id);
     }
 
     //for add/update
     @PostMapping("/details")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     public CartDetailDTO addCartDetail(@RequestBody CartDetailDTO cartDetailDTO) {
         return cartDetailService.addCartDetail(cartDetailDTO);
     }
 
-//    @PutMapping("/details")
-//    public CartDetailDTO updateCartDetail(@RequestBody CartDetailDTO cartDetailDTO) {
-//        return cartDetailService.updateCartDetail(cartDetailDTO);
-//    }
-
     //remove individual cart detail
     @DeleteMapping("/details")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     public void removeCartDetail(@RequestParam int id){
         cartDetailService.removeCartDetail(id);
     }

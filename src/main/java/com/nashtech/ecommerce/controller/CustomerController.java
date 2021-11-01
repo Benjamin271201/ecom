@@ -1,17 +1,15 @@
 package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Customer;
-import com.nashtech.ecommerce.dto.CustomerDTO;
+import com.nashtech.ecommerce.dto.CustomerOutputDTO;
 import com.nashtech.ecommerce.service.CustomerService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping ("/api/customer-management")
+@RequestMapping("/api/customer-management")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -20,23 +18,29 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping ("/customers/all")
+    @GetMapping ("/customers")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomer();
     }
 
     @GetMapping ("/customers/phone")
+    @PreAuthorize("hasRole('ADMIN')")
     public Customer getCustomerByPhone(@RequestParam String phone) {
         return customerService.getCustomerByPhone(phone);
     }
 
-    @GetMapping ("/customers/id")
-    public Customer getCustomerById(@RequestParam int id) {
+    //TODO: return customer DTO
+    @GetMapping ("/customers/{id}")
+    public Customer getCustomerById(@PathVariable("id") int id) {
         return customerService.getCustomerById(id);
     }
 
-    @PostMapping()
-    public CustomerDTO addCustomer(@RequestBody CustomerDTO customerDTO) {
-        return customerService.addCustomer(customerDTO);
+    //register
+    @PostMapping
+    public CustomerOutputDTO registerCustomer(@RequestParam String username, @RequestParam String password,
+                                            @RequestParam String email, @RequestParam String phone,
+                                            @RequestParam String firstName, @RequestParam String lastName) {
+        return customerService.registerCustomer(username, password, email, phone, firstName, lastName);
     }
 }

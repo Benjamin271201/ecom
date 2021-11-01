@@ -14,6 +14,10 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     public List<Product> getProductByNameContains(String keyword);
 
+    public List<Product> findProductsByCategoryId(int categoryId);
+
+    public List<Product> findProductsByBrandId(int brandId);
+
     @Modifying
     @Query ("UPDATE Product p SET p.stock = :newStock WHERE p.id = :id")
     public void updateProductStock(@Param("id") int id, @Param("newStock") int newStock);

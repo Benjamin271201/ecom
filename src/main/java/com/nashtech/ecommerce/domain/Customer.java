@@ -1,9 +1,6 @@
 package com.nashtech.ecommerce.domain;
 
-import com.nashtech.ecommerce.dto.CustomerDTO;
-import com.nashtech.ecommerce.repository.AccountRepository;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

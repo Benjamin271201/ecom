@@ -1,15 +1,16 @@
 package com.nashtech.ecommerce.service;
 
+import com.nashtech.ecommerce.domain.Account;
 import com.nashtech.ecommerce.domain.Customer;
-import com.nashtech.ecommerce.dto.CustomerDTO;
+import com.nashtech.ecommerce.dto.CustomerOutputDTO;
 import com.nashtech.ecommerce.exception.AlreadyExistsException;
 import com.nashtech.ecommerce.exception.NotFoundException;
 import com.nashtech.ecommerce.repository.AccountRepository;
 import com.nashtech.ecommerce.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -42,22 +43,35 @@ public class CustomerService {
                 .orElseThrow(() -> new NotFoundException((CUSTOMER_NOT_FOUND)));
     }
 
-    //need to check if user has the right to add customer info to this account id
-    public CustomerDTO addCustomer(CustomerDTO customerDTO) {
-        //check account id
-        if (!accountRepository.existsById(customerDTO.getAccountId()))
-            throw new NotFoundException(ACCOUNT_NOT_FOUND);
+    public CustomerOutputDTO registerCustomer(String username,   String password,
+                                             String email,  String phone,
+                                             String firstName,  String lastName) {
+        if (accountRepository.findAccountByUsername(username).isPresent())
+            throw new AlreadyExistsException("Username already exists!");
         //check phone number existence
-        if (customerRepository.existsCustomerByPhone(customerDTO.getPhone()))
+        if (customerRepository.existsCustomerByPhone(phone))
             throw new AlreadyExistsException(PHONE_ALREADY_EXISTS);
         //check email existence
-        if (customerRepository.existsCustomerByEmail(customerDTO.getEmail()))
+        if (customerRepository.existsCustomerByEmail(email))
             throw new AlreadyExistsException(EMAIL_ALREADY_EXISTS);
-        Customer customer = customerDTOtoCustomer(customerDTO);
-        return new CustomerDTO(customerRepository.save(customer));
+        //create new account
+        //TODO: hash password
+        Account account = new Account();
+        account.setUsername(username);
+        account.setPassword(password);
+        account.setJoinDate();
+        accountRepository.save(account);
+        //create new customer
+        Customer customer = new Customer();
+        customer.setAccount(account);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setPhone(phone);
+        customer.setEmail(email);
+        return new CustomerOutputDTO(customerRepository.save(customer));
     }
 
-    public Customer customerDTOtoCustomer(CustomerDTO customerDTO) {
+    public Customer customerDTOtoCustomer(CustomerOutputDTO customerDTO) {
         Customer customer = new Customer();
         customer.setAccount(accountRepository.getById(customerDTO.getAccountId()));
         customer.setFirstName(customerDTO.getFirstName());
@@ -67,6 +81,7 @@ public class CustomerService {
         return customer;
     }
 
+    //TODO: update name, email, phone
     public Customer updateCustomer(Customer customer) {
         return customerRepository.save(customer);
     }

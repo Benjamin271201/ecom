@@ -3,13 +3,14 @@ package com.nashtech.ecommerce.controller;
 import com.nashtech.ecommerce.domain.Category;
 import com.nashtech.ecommerce.service.CategoryService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/category-management")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -17,28 +18,32 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category/all")
-    public ResponseEntity<List<Category>> getAllCategories() {
-        return ResponseEntity.ok(categoryService.getAllCategories());
+    @GetMapping("/categories")
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 
-    @PostMapping("/category/add")
-    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-        return ResponseEntity.ok(categoryService.addCategory(category));
+    @GetMapping("/categories/{id}")
+    public Category getCategoryById(@PathVariable("id") int id) {
+        return categoryService.findCategoryById(id);
     }
 
-    @PutMapping("/category/update")
-    public ResponseEntity<Optional<Category>> updateCategoryName(@RequestParam int id, String newName) {
-        return ResponseEntity.ok(categoryService.updateCategoryName(id, newName));
+    //TODO: new category DTO
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public Category addCategory(@RequestBody Category category) {
+        return categoryService.addCategory(category);
     }
 
-    @PutMapping("/category/disable")
-    public ResponseEntity<Optional<Category>> disableCategory(@RequestParam int id) {
-        return ResponseEntity.ok(categoryService.disableCategory(id));
+    @PutMapping("/categories")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Category updateCategoryName(@RequestParam int id, @RequestParam String newName) {
+        return categoryService.updateCategoryName(id, newName);
     }
 
-    @PutMapping("/category/enable")
-    public ResponseEntity<Optional<Category>> enableCategory(@RequestParam int id) {
-        return ResponseEntity.ok(categoryService.enableCategory(id));
+    @DeleteMapping("/categories/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void toggleCategoryStatus(@PathVariable("id") int id) {
+        categoryService.toggleCategoryStatus(id);
     }
 }

@@ -2,6 +2,7 @@ package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.dto.ReviewDTO;
 import com.nashtech.ecommerce.service.ReviewService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,8 @@ public class ReviewController {
     }
 
     //add review
-    @PostMapping("")
+    @PostMapping
+    @PreAuthorize("hasRole('CUSTOMER')")
     public ReviewDTO addReview(@RequestParam int productId, @RequestParam int customerId,
                                @RequestParam String context, @RequestParam int rating) {
         return reviewService.addReview(productId, customerId, context, rating);
@@ -32,18 +34,15 @@ public class ReviewController {
 
     //update review
     @PutMapping
+    @PreAuthorize("hasRole('CUSTOMER')")
     public ReviewDTO editReview(@RequestParam int id, @RequestParam String context, @RequestParam int rating) {
         return reviewService.editReview(id, context, rating);
     }
 
-//    @PutMapping("reviews")
-//    public void toggleReviewLikeStatus(@RequestParam int reviewId, @RequestParam int customerId) {
-//        reviewService.toggleReviewLikeStatus(reviewId, customerId);
-//    }
-
     //delete review
     //change status of isActive to false
     @DeleteMapping
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     public void deleteReview(@RequestParam int id) {
         reviewService.deleteReview(id);
     }

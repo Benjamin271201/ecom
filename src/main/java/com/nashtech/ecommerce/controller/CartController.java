@@ -4,6 +4,7 @@ import com.nashtech.ecommerce.domain.Cart;
 import com.nashtech.ecommerce.dto.CartDTO;
 import com.nashtech.ecommerce.service.CartDetailService;
 import com.nashtech.ecommerce.service.CartService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -11,25 +12,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/cart-management")
 public class CartController {
     private final CartService cartService;
-    private final CartDetailService cartDetailService;
 
-    public CartController(CartService cartService, CartDetailService cartDetailService) {
+    public CartController(CartService cartService) {
         this.cartService = cartService;
-        this.cartDetailService = cartDetailService;
     }
 
-    @GetMapping("/carts")
-    public CartDTO getCartByCustomerId(@RequestParam int customerId) {
+    @GetMapping("/carts/{id}")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
+    public CartDTO getCartByCustomerId(@PathVariable("id") int customerId) {
         return cartService.getCartByCustomerId(customerId);
     }
 
-    @PostMapping("/carts")
+    //TODO: admin only? might remove this as well since addCartDetail can create a cart instead
+    @PostMapping
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     public Cart createCart(@RequestParam int customerId) {
         return cartService.createCart(customerId);
     }
 
-    @DeleteMapping("/carts")
-    public void deleteCartByCustomerId(@RequestParam int customerId) {
+    @DeleteMapping("/carts/{id}")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
+    public void deleteCartByCustomerId(@PathVariable("id") int customerId) {
         cartService.deleteCartByCustomerId(customerId);
     }
 }

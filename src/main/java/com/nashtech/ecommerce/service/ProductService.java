@@ -26,6 +26,14 @@ public class ProductService {
         return productRepository.findAll().stream().map(ProductDTO::new).toList();
     }
 
+    public List<ProductDTO> getProductsByCategoryId(int categoryId) {
+        return productRepository.findProductsByCategoryId(categoryId).stream().map(ProductDTO::new).toList();
+    }
+
+    public List<ProductDTO> getProductsByBrandId(int brandId) {
+        return productRepository.findProductsByBrandId(brandId).stream().map(ProductDTO::new).toList();
+    }
+
     public List<ProductDTO> searchProductsByName(String keyword) {
         return productRepository.getProductByNameContains(keyword).stream().map(ProductDTO::new).toList();
     }

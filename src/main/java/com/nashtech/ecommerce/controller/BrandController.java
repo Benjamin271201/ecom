@@ -3,6 +3,7 @@ package com.nashtech.ecommerce.controller;
 import com.nashtech.ecommerce.domain.Brand;
 import com.nashtech.ecommerce.service.BrandService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,28 +18,32 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @GetMapping("/brands")
-    public Brand getBrandById(int id) {
+    @GetMapping("/brands/{id}")
+    public Brand getBrandById(@PathVariable("id") int id) {
         return brandService.findBrandById(id);
     }
 
-    @GetMapping("/brands/all")
+    //TODO: admin only?
+    @GetMapping("/brands")
     public List<Brand> getAllBrands() {
         return brandService.getAllBrands();
     }
 
-    @PostMapping("/brands")
-    public Brand addBrand(String name) {
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public Brand addBrand(@RequestParam String name) {
         return brandService.addBrand(name);
     }
 
-    @PutMapping("/brands")
-    public Brand updateBrandName(int id, String newName) {
+    @PutMapping("/brands/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Brand updateBrandName(@PathVariable("id") int id, @RequestParam String newName) {
         return brandService.updateBrandName(id, newName);
     }
 
-    @DeleteMapping("/brands")
-    public Brand toggleBrandStatus(@RequestParam int id) {
+    @DeleteMapping("/brands/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Brand toggleBrandStatus(@PathVariable("id") int id) {
         return brandService.updateBrandStatus(id);
     }
 }
