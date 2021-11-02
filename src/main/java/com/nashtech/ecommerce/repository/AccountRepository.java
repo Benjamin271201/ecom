@@ -18,4 +18,8 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     public boolean existsAccountByUsername (String username);
 
     public Optional<Account> findAccountByUsername (String username);
+
+    @Modifying
+    @Query ("UPDATE Account a SET a.password = :newPassword WHERE a.id = :id")
+    public void updatePassword(@Param("id") int id, @Param("newPassword") String newPassword);
 }

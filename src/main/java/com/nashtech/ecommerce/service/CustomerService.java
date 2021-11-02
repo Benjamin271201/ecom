@@ -16,9 +16,7 @@ import java.util.List;
 public class CustomerService {
     //Error msg
     public static final String CUSTOMER_NOT_FOUND = "Customer not found!";
-    public static final String ACCOUNT_NOT_FOUND = "Account not found!";
-    public static final String PHONE_ALREADY_EXISTS = "Phone number already exists!";
-    public static final String EMAIL_ALREADY_EXISTS = "Email already exists!";
+
 
     private final CustomerRepository customerRepository;
     private final AccountRepository accountRepository;
@@ -41,34 +39,6 @@ public class CustomerService {
         return customerRepository
                 .findCustomerByPhone(phone)
                 .orElseThrow(() -> new NotFoundException((CUSTOMER_NOT_FOUND)));
-    }
-
-    public CustomerOutputDTO registerCustomer(String username,   String password,
-                                             String email,  String phone,
-                                             String firstName,  String lastName) {
-        if (accountRepository.findAccountByUsername(username).isPresent())
-            throw new AlreadyExistsException("Username already exists!");
-        //check phone number existence
-        if (customerRepository.existsCustomerByPhone(phone))
-            throw new AlreadyExistsException(PHONE_ALREADY_EXISTS);
-        //check email existence
-        if (customerRepository.existsCustomerByEmail(email))
-            throw new AlreadyExistsException(EMAIL_ALREADY_EXISTS);
-        //create new account
-        //TODO: hash password
-        Account account = new Account();
-        account.setUsername(username);
-        account.setPassword(password);
-        account.setJoinDate();
-        accountRepository.save(account);
-        //create new customer
-        Customer customer = new Customer();
-        customer.setAccount(account);
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setPhone(phone);
-        customer.setEmail(email);
-        return new CustomerOutputDTO(customerRepository.save(customer));
     }
 
     public Customer customerDTOtoCustomer(CustomerOutputDTO customerDTO) {

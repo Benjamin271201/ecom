@@ -37,10 +37,10 @@ public class CustomerController {
     }
 
     //register
-    @PostMapping
-    public CustomerOutputDTO registerCustomer(@RequestParam String username, @RequestParam String password,
-                                            @RequestParam String email, @RequestParam String phone,
-                                            @RequestParam String firstName, @RequestParam String lastName) {
-        return customerService.registerCustomer(username, password, email, phone, firstName, lastName);
-    }
+//    @PostMapping
+//    public CustomerOutputDTO registerCustomer(@RequestParam String username, @RequestParam String password,
+//                                            @RequestParam String email, @RequestParam String phone,
+//                                            @RequestParam String firstName, @RequestParam String lastName) {
+//        return customerService.registerCustomer(username, password, email, phone, firstName, lastName);
+//    }
 }

@@ -62,12 +62,6 @@ public class AccountService {
         return accountRepository.save(adminAccount);
     }
 
-    public Account login(String username, String password) throws FailedLoginException {
-        Account account = findAccountByUsername(username);
-        if (!account.getPassword().equals(password)) throw new FailedLoginException();
-        return account;
-    }
-
     //SS
     //needs to check if the requested user has the right to modify account
     public Account updateUsername(Account account, String newUsername) {
@@ -87,10 +81,8 @@ public class AccountService {
 
     //SS
     //needs to check if the requested user has the right to modify account
-    public Account updatePassword(Account account, String newPassword) {
-        Account acc = findAccountById(account.getId());
-        acc.setPassword(newPassword);
-        return accountRepository.save(acc);
+    public void updatePassword(int id, String newPassword) {
+        accountRepository.updatePassword(id, newPassword);
     }
 
     public void deactivateAccount(int id) {

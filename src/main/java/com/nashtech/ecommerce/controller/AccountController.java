@@ -44,21 +44,10 @@ public class AccountController {
         return ResponseEntity.created(new URI("/api/find/id" + result.getId())).body(result);
     }
 
-    @PostMapping("/login")
-    public Account login(@RequestParam String username, @RequestParam String password) throws FailedLoginException {
-        return accountService.login(username, password);
-    }
-
-    //TODO: consider removing this
-    @PutMapping("/accounts/username")
-    public Account updateUsername(@RequestBody Account account) {
-        return accountService.updateUsername(account, account.getUsername());
-    }
-
     @PutMapping("/accounts/password")
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
-    public Account updatePassword(@RequestBody Account account) {
-        return accountService.updatePassword(account, account.getPassword());
+    public void updatePassword(@RequestParam int id, @RequestParam String newPassword) {
+        accountService.updatePassword(id, newPassword);
     }
 
     @DeleteMapping("/accounts/{id}")
