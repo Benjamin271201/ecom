@@ -1,8 +1,10 @@
 package com.nashtech.ecommerce.service;
 
+import com.nashtech.ecommerce.dto.AccountDTO;
 import com.nashtech.ecommerce.exception.*;
 import com.nashtech.ecommerce.domain.Account;
 import com.nashtech.ecommerce.repository.AccountRepository;
+import com.nashtech.ecommerce.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 
@@ -16,9 +18,6 @@ import java.util.List;
 public class AccountService {
     //Errors
     private static final String ACC_NOT_FOUND = "Account not found!";
-//    private static final String USERNAME_NOT_FOUND = "Username not found!";
-    private static final String USERNAME_ALREADY_EXISTS = "Username already exists!";
-
 
     //Constructor
     private final AccountRepository accountRepository;
@@ -26,61 +25,22 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account findAccountById(int id) {
-        return accountRepository
+    public AccountDTO findAccountById(int id) {
+        return new AccountDTO(accountRepository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException(ACC_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(ACC_NOT_FOUND)));
     }
 
-    public Account findAccountByUsername(String username) {
-        return accountRepository
+    public AccountDTO findAccountByUsername(String username) {
+        return new AccountDTO(accountRepository
                 .findAccountByUsername(username)
-                .orElseThrow(() -> new NotFoundException(ACC_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(ACC_NOT_FOUND)));
     }
 
-    public List<Account> getAllAccount() {
-        return accountRepository.findAll();
+    public List<AccountDTO> getAllAccount() {
+        return accountRepository.findAll().stream().map(AccountDTO::new).toList();
     }
 
-    public Account addCustomerAccount(Account customerAccount) {
-        if (existsAccountByUsername(customerAccount.getUsername())) {
-            throw new AlreadyExistsException(USERNAME_ALREADY_EXISTS);
-        }
-        customerAccount.setJoinDate();
-        customerAccount.setAdmin(false);
-        customerAccount.setBanned(false);
-        return accountRepository.save(customerAccount);
-    }
-
-    public Account addAdminAccount(Account adminAccount) {
-        if (existsAccountByUsername(adminAccount.getUsername())) {
-            throw new AlreadyExistsException(USERNAME_ALREADY_EXISTS);
-        }
-        adminAccount.setJoinDate(Date.valueOf(LocalDate.now()));
-        adminAccount.setAdmin(true);
-        adminAccount.setBanned(false);
-        return accountRepository.save(adminAccount);
-    }
-
-    //SS
-    //needs to check if the requested user has the right to modify account
-    public Account updateUsername(Account account, String newUsername) {
-        if (!existsAccountById(account.getId())) {
-            throw new NotFoundException(ACC_NOT_FOUND);
-        }
-        //check if new username != old username
-        if (!account.getUsername().equals(newUsername)) {
-            //check if username exists
-            if (existsAccountByUsername(newUsername)) {
-                throw new AlreadyExistsException(USERNAME_ALREADY_EXISTS);
-            }
-            account.setUsername(newUsername);
-        }
-        return accountRepository.save(account);
-    }
-
-    //SS
-    //needs to check if the requested user has the right to modify account
     public void updatePassword(int id, String newPassword) {
         accountRepository.updatePassword(id, newPassword);
     }

@@ -15,11 +15,9 @@ import java.util.List;
 @RequestMapping("/api/product-management")
 public class ProductController {
     private final ProductService productService;
-    private final TransactionDetailService transactionDetailService;
 
-    public ProductController(ProductService productService, TransactionDetailService transactionDetailService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.transactionDetailService = transactionDetailService;
     }
 
     @GetMapping("/products/categories/{id}")
@@ -43,7 +41,7 @@ public class ProductController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ProductDTO addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
     }

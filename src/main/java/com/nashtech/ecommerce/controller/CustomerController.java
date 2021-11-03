@@ -2,6 +2,7 @@ package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Customer;
 import com.nashtech.ecommerce.dto.CustomerOutputDTO;
+import com.nashtech.ecommerce.security.SecurityUtils;
 import com.nashtech.ecommerce.service.CustomerService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,28 +20,21 @@ public class CustomerController {
     }
 
     @GetMapping ("/customers")
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<Customer> getAllCustomers() {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<CustomerOutputDTO> getAllCustomers() {
         return customerService.getAllCustomer();
     }
 
     @GetMapping ("/customers/phone")
-    @PreAuthorize("hasRole('ADMIN')")
-    public Customer getCustomerByPhone(@RequestParam String phone) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public CustomerOutputDTO getCustomerByPhone(@RequestParam String phone) {
         return customerService.getCustomerByPhone(phone);
     }
 
-    //TODO: return customer DTO
     @GetMapping ("/customers/{id}")
-    public Customer getCustomerById(@PathVariable("id") int id) {
-        return customerService.getCustomerById(id);
+    @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
+    public CustomerOutputDTO getCustomerById(@PathVariable("id") int id) {
+        SecurityUtils.isForbidden(customerService.getCustomerDTOById(id).getAccountId());
+        return customerService.getCustomerDTOById(id);
     }
-
-    //register
-//    @PostMapping
-//    public CustomerOutputDTO registerCustomer(@RequestParam String username, @RequestParam String password,
-//                                            @RequestParam String email, @RequestParam String phone,
-//                                            @RequestParam String firstName, @RequestParam String lastName) {
-//        return customerService.registerCustomer(username, password, email, phone, firstName, lastName);
-//    }
 }

@@ -34,8 +34,6 @@ public class AddressService {
 
     //need to get customer from the session
     public Address addAddress (Address address) {
-        address.setActive(true);
-        //missing code
         return addressRepository.save(address);
     }
 
@@ -43,8 +41,8 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
-    public void deactivateAddress (int id) {
-        addressRepository.deactivateAddress(id);
+    public void deleteAddress (int id) {
+        addressRepository.deleteById(id);
     }
 
 }

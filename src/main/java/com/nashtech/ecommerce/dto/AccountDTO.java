@@ -1,6 +1,6 @@
 package com.nashtech.ecommerce.dto;
 
-import com.nashtech.ecommerce.domain.Customer;
+import com.nashtech.ecommerce.domain.Account;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,20 +11,12 @@ import java.sql.Date;
 @NoArgsConstructor @Getter @Setter
 public @Data class AccountDTO {
     private int id;
-    private String firstName;
-    private String lastName;
     private String username;
-    private String email;
-    private String phone;
     private Date joinDate;
 
-    public AccountDTO(Customer customer) {
-        this.id = customer.getId();
-        this.firstName = customer.getFirstName();
-        this.lastName = customer.getLastName();
-        this.username = customer.getAccount().getUsername();
-        this.email = customer.getEmail();
-        this.phone = customer.getPhone();
-        this.joinDate = customer.getAccount().getJoinDate();
+    public AccountDTO(Account account) {
+        this.id = account.getId();
+        this.username = account.getUsername();
+        this.joinDate = account.getJoinDate();
     }
 }

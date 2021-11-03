@@ -23,10 +23,12 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category addCategory(Category category) {
-        if (categoryRepository.existsByCategoryName(category.getCategoryName())) {
+    public Category addCategory(String name) {
+        if (categoryRepository.existsByCategoryName(name)) {
             throw new AlreadyExistsException(CATEGORY_ALREADY_EXISTS);
         }
+        Category category = new Category();
+        category.setCategoryName(name);
         category.setActive(true);
         return categoryRepository.save(category);
     }

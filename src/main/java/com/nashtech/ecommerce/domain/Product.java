@@ -18,7 +18,8 @@ import java.util.Set;
 //TODO: assign seq generator
 public @Data class Product implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_gen")
+    @SequenceGenerator(name = "product_gen", sequenceName = "product_id_seq", allocationSize = 1)
     private int id;
 
     @Column (name = "product_name", unique = true)

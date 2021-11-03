@@ -28,21 +28,20 @@ public class CategoryController {
         return categoryService.findCategoryById(id);
     }
 
-    //TODO: new category DTO
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public Category addCategory(@RequestBody Category category) {
-        return categoryService.addCategory(category);
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Category addCategory(@RequestParam String name) {
+        return categoryService.addCategory(name);
     }
 
     @PutMapping("/categories")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Category updateCategoryName(@RequestParam int id, @RequestParam String newName) {
         return categoryService.updateCategoryName(id, newName);
     }
 
     @DeleteMapping("/categories/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void toggleCategoryStatus(@PathVariable("id") int id) {
         categoryService.toggleCategoryStatus(id);
     }

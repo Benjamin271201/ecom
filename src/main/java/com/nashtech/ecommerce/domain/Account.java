@@ -14,7 +14,8 @@ import java.time.LocalDate;
 public @Data
 class Account implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_gen")
+    @SequenceGenerator(name = "account_gen", sequenceName = "account_id_seq", allocationSize = 1)
     private int id;
 
     @NotBlank (message = "Username cannot be empty!")

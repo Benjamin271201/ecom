@@ -13,7 +13,9 @@ import java.io.Serializable;
 @Entity @Table (name = "address")
 
 public @Data class Address implements Serializable {
-    @Id @Column (name = "id") @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @Id @Column (name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_gen")
+    @SequenceGenerator(name = "address_gen", sequenceName = "address_id_seq", allocationSize = 1)
     private int id;
 
     @ManyToOne(optional = false)
@@ -32,7 +34,4 @@ public @Data class Address implements Serializable {
 
     @Column (name = "province")
     private String province;
-
-    @Column (name = "is_active")
-    boolean isActive;
 }

@@ -31,4 +31,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity handleConstraintViolationException(ConstraintViolationException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = InputMismatchException.class)
+    public ResponseEntity handleInputMismatchException(InputMismatchException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = ForbiddenException.class)
+    public ResponseEntity handleForbiddenException(ForbiddenException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
+    }
 }

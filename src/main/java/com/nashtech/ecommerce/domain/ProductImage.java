@@ -14,7 +14,8 @@ import java.io.Serializable;
 @Table(name = "product_image")
 public @Data class ProductImage implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_image_gen")
+    @SequenceGenerator(name = "product_image_gen", sequenceName = "product_image_id_seq", allocationSize = 1)
     private int id;
 
     @ManyToOne

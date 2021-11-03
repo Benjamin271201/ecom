@@ -13,6 +13,8 @@ import java.io.Serializable;
 
 public @Data class LikedProduct implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "liked_product_gen")
+    @SequenceGenerator(name = "liked_product_gen", sequenceName = "liked_product_id_seq", allocationSize = 1)
     private int id;
 
     @ManyToOne @JoinColumn (name = "customer_id")

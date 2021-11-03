@@ -1,7 +1,10 @@
 package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.dto.ReviewDTO;
+import com.nashtech.ecommerce.security.SecurityUtils;
+import com.nashtech.ecommerce.service.CustomerService;
 import com.nashtech.ecommerce.service.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +19,10 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    //TODO: get a specific amount of reviews for each pages
+    @Autowired
+    private CustomerService customerService;
+
+    //TODO: get a specific amount of reviews for each page
 
     //get all reviews of a product
     @GetMapping
@@ -26,24 +32,27 @@ public class ReviewController {
 
     //add review
     @PostMapping
-    @PreAuthorize("hasRole('CUSTOMER')")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public ReviewDTO addReview(@RequestParam int productId, @RequestParam int customerId,
                                @RequestParam String context, @RequestParam int rating) {
+        SecurityUtils.isForbidden(customerService.getCustomerById(customerId).getAccount().getId());
         return reviewService.addReview(productId, customerId, context, rating);
     }
 
     //update review
     @PutMapping
-    @PreAuthorize("hasRole('CUSTOMER')")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public ReviewDTO editReview(@RequestParam int id, @RequestParam String context, @RequestParam int rating) {
+        SecurityUtils.isForbidden(reviewService.getReviewById(id).getCustomer().getAccount().getId());
         return reviewService.editReview(id, context, rating);
     }
 
     //delete review
     //change status of isActive to false
     @DeleteMapping
-    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
     public void deleteReview(@RequestParam int id) {
+        SecurityUtils.isForbidden(reviewService.getReviewById(id).getCustomer().getAccount().getId());
         reviewService.deleteReview(id);
     }
 

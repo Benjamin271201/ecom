@@ -4,10 +4,12 @@ import com.nashtech.ecommerce.domain.Cart;
 import com.nashtech.ecommerce.domain.CartDetail;
 import com.nashtech.ecommerce.domain.Customer;
 import com.nashtech.ecommerce.dto.CartDTO;
+import com.nashtech.ecommerce.exception.ConstraintViolationException;
 import com.nashtech.ecommerce.exception.NotFoundException;
 import com.nashtech.ecommerce.repository.CartDetailRepository;
 import com.nashtech.ecommerce.repository.CartRepository;
 import com.nashtech.ecommerce.repository.CustomerRepository;
+import com.nashtech.ecommerce.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,6 +39,9 @@ public class CartService {
     }
 
     public CartDTO getCartByCustomerId(int customerId) {
+        System.out.println(isAllowed(customerId));
+        if (!isAllowed(customerId))
+            throw new ConstraintViolationException("Unauthorized");
         Cart cart = cartRepository
                 .findByCustomerId(customerId)
                 .orElseThrow(() -> new NotFoundException(CART_NOT_FOUND));
@@ -63,6 +68,14 @@ public class CartService {
 
     public boolean existsByCartId(int id) {
         return cartRepository.existsById(id);
+    }
+
+    public boolean isAllowed(int customerId) {
+        Customer customer = customerRepository
+                .findById(customerId)
+                .orElseThrow(() -> new NotFoundException("Customer not found!"));
+        int accountId = customer.getAccount().getId();
+        return accountId == SecurityUtils.getCurrentUserLoginId();
     }
 
     @Transactional

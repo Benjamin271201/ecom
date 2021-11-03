@@ -19,7 +19,8 @@ import java.util.Set;
 
 public @Data class Transaction implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_gen")
+    @SequenceGenerator(name = "transaction_gen", sequenceName = "transaction_id_seq", allocationSize = 1)
     private int id;
 
     @ManyToOne(optional = false) @JoinColumn(name = "customer_id")

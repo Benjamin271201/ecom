@@ -14,7 +14,6 @@ import com.nashtech.ecommerce.repository.CustomerRepository;
 import com.nashtech.ecommerce.service.AccountService;
 import com.nashtech.ecommerce.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -88,7 +87,6 @@ public class AuthController {
         //check email existence
         if (customerRepository.existsCustomerByEmail(signUpRequest.getEmail()))
             throw new AlreadyExistsException("Email already in use!");
-        //TODO: prevent saving into db without relying on FE
         //create new account
         Account account = new Account();
         account.setUsername(signUpRequest.getUsername());

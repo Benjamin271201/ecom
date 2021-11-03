@@ -12,7 +12,8 @@ import java.io.Serializable;
 @Table (name = "transaction_detail", uniqueConstraints={@UniqueConstraint(columnNames = {"transaction_id" , "product_id"})})
 public @Data class TransactionDetail implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_detail_gen")
+    @SequenceGenerator(name = "transaction_detail_gen", sequenceName = "transaction_detail_id_seq", allocationSize = 1)
     private int id;
 
     @ManyToOne @JoinColumn (name = "transaction_id")

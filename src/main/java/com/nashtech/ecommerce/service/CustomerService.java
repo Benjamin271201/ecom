@@ -16,7 +16,9 @@ import java.util.List;
 public class CustomerService {
     //Error msg
     public static final String CUSTOMER_NOT_FOUND = "Customer not found!";
-
+    public static final String ACCOUNT_NOT_FOUND = "Account not found!";
+    public static final String PHONE_ALREADY_EXISTS = "Phone number already exists!";
+    public static final String EMAIL_ALREADY_EXISTS = "Email already exists!";
 
     private final CustomerRepository customerRepository;
     private final AccountRepository accountRepository;
@@ -25,8 +27,8 @@ public class CustomerService {
         this.accountRepository = accountRepository;
     }
 
-    public List<Customer> getAllCustomer() {
-        return customerRepository.findAll();
+    public List<CustomerOutputDTO> getAllCustomer() {
+        return customerRepository.findAll().stream().map(CustomerOutputDTO::new).toList();
     }
 
     public Customer getCustomerById(int id) {
@@ -35,10 +37,14 @@ public class CustomerService {
                 .orElseThrow(() -> new NotFoundException(CUSTOMER_NOT_FOUND));
     }
 
-    public Customer getCustomerByPhone(String phone) {
-        return customerRepository
+    public CustomerOutputDTO getCustomerDTOById(int id) {
+        return new CustomerOutputDTO(getCustomerById(id));
+    }
+
+    public CustomerOutputDTO getCustomerByPhone(String phone) {
+        return new CustomerOutputDTO(customerRepository
                 .findCustomerByPhone(phone)
-                .orElseThrow(() -> new NotFoundException((CUSTOMER_NOT_FOUND)));
+                .orElseThrow(() -> new NotFoundException((CUSTOMER_NOT_FOUND))));
     }
 
     public Customer customerDTOtoCustomer(CustomerOutputDTO customerDTO) {

@@ -23,26 +23,25 @@ public class BrandController {
         return brandService.findBrandById(id);
     }
 
-    //TODO: admin only?
     @GetMapping("/brands")
     public List<Brand> getAllBrands() {
         return brandService.getAllBrands();
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Brand addBrand(@RequestParam String name) {
         return brandService.addBrand(name);
     }
 
     @PutMapping("/brands/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Brand updateBrandName(@PathVariable("id") int id, @RequestParam String newName) {
         return brandService.updateBrandName(id, newName);
     }
 
     @DeleteMapping("/brands/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Brand toggleBrandStatus(@PathVariable("id") int id) {
         return brandService.updateBrandStatus(id);
     }

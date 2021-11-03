@@ -15,4 +15,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Modifying
     @Query("UPDATE Review r SET r.isActive = false WHERE r.id = :id")
     public void deactivateReview(int id);
+
+    public boolean existsByCustomerIdAndProductId(int customerId, int productId);
 }

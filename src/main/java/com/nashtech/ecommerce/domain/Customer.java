@@ -12,7 +12,9 @@ import java.io.Serializable;
 @Entity @Table (name = "customer")
 
 public @Data class Customer implements Serializable {
-    @Id @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_gen")
+    @SequenceGenerator(name = "customer_gen", sequenceName = "customer_id_seq", allocationSize = 1)
     @Column (name = "id")
     private int id;
 

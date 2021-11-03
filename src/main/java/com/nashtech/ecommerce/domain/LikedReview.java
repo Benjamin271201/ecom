@@ -14,6 +14,8 @@ import java.io.Serializable;
 
 public @Data class LikedReview implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "liked_review_gen")
+    @SequenceGenerator(name = "liked_review_gen", sequenceName = "liked_review_id_seq", allocationSize = 1)
     private int id;
 
     @ManyToOne @JoinColumn (name = "customer_id")

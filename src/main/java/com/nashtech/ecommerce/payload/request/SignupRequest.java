@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -21,8 +20,19 @@ public class SignupRequest implements Serializable {
     @Pattern (regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$")
     private String password;
 
+    @NotBlank
+    @Size(min = 1, max = 40)
     private String firstName;
+
+    @NotBlank
+    @Size(min = 1, max = 40)
     private String lastName;
+
+    @NotBlank
+    @Email
     private String email;
+
+    @NotBlank
+    @Pattern(regexp = "[0-9]{4,19}")
     private String phone;
 }

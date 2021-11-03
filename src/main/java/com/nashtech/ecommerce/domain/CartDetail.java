@@ -16,7 +16,8 @@ import java.io.Serializable;
 
 public @Data class CartDetail implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_detail_gen")
+    @SequenceGenerator(name = "cart_detail_gen", sequenceName = "cart_detail_id_seq", allocationSize = 1)
     private int id;
 
     @EqualsAndHashCode.Exclude

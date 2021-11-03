@@ -2,11 +2,14 @@ package com.nashtech.ecommerce.service;
 
 import com.nashtech.ecommerce.domain.Review;
 import com.nashtech.ecommerce.dto.ReviewDTO;
+import com.nashtech.ecommerce.exception.AlreadyExistsException;
 import com.nashtech.ecommerce.exception.NotFoundException;
 import com.nashtech.ecommerce.repository.LikedReviewRepository;
 import com.nashtech.ecommerce.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import java.util.List;
 public class ReviewService {
     //Error msg
     private static final String REVIEW_NOT_FOUND = "Review not found!";
+    private static final String REVIEW_ALREADY_EXISTS = "Review for this product has already exists!";
 
     private final ReviewRepository reviewRepository;
     private final LikedReviewRepository likedReviewRepository;
@@ -49,6 +53,8 @@ public class ReviewService {
     //add review
     public ReviewDTO addReview(int productId, int customerId, String context, int rating) {
         Review review = new Review();
+        if (reviewRepository.existsByCustomerIdAndProductId(customerId, productId))
+            throw new AlreadyExistsException(REVIEW_ALREADY_EXISTS);
         review.setProduct(productService.getProductById(productId));
         review.setCustomer(customerService.getCustomerById(customerId));
         review.setPostedDate();
@@ -64,6 +70,7 @@ public class ReviewService {
         Review review = getReviewById(id);
         review.setContext(context);
         review.setRating(rating);
+        review.setModifiedDate(Date.valueOf(LocalDate.now()));
         return new ReviewDTO(reviewRepository.save(review));
     }
 
@@ -71,6 +78,4 @@ public class ReviewService {
     public void deleteReview(int id) {
         reviewRepository.deactivateReview(id);
     }
-        //if liked -> unlike and vice versa
-
 }

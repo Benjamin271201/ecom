@@ -22,7 +22,8 @@ import java.util.Set;
 @Where(clause = "is_active = true")
 public class Review implements Serializable {
     @Id @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_gen")
+    @SequenceGenerator(name = "review_gen", sequenceName = "review_id_seq", allocationSize = 1)
     private int id;
 
     @EqualsAndHashCode.Exclude
