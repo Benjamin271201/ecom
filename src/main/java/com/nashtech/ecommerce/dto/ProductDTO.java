@@ -6,14 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
 @Getter
 @Setter
-public @Data class ProductDTO {
-    //TODO: add constraints
+public class ProductDTO {
     private int id;
     private String name;
     private String brandName;

@@ -2,6 +2,7 @@ package com.nashtech.ecommerce.service;
 
 import com.nashtech.ecommerce.domain.Account;
 import com.nashtech.ecommerce.domain.Customer;
+import com.nashtech.ecommerce.dto.CustomerInputDTO;
 import com.nashtech.ecommerce.dto.CustomerOutputDTO;
 import com.nashtech.ecommerce.exception.AlreadyExistsException;
 import com.nashtech.ecommerce.exception.NotFoundException;
@@ -16,9 +17,6 @@ import java.util.List;
 public class CustomerService {
     //Error msg
     public static final String CUSTOMER_NOT_FOUND = "Customer not found!";
-    public static final String ACCOUNT_NOT_FOUND = "Account not found!";
-    public static final String PHONE_ALREADY_EXISTS = "Phone number already exists!";
-    public static final String EMAIL_ALREADY_EXISTS = "Email already exists!";
 
     private final CustomerRepository customerRepository;
     private final AccountRepository accountRepository;
@@ -47,19 +45,14 @@ public class CustomerService {
                 .orElseThrow(() -> new NotFoundException((CUSTOMER_NOT_FOUND))));
     }
 
-    public Customer customerDTOtoCustomer(CustomerOutputDTO customerDTO) {
+    public CustomerInputDTO updateCustomer(CustomerInputDTO newCustomerInfo) {
         Customer customer = new Customer();
-        customer.setAccount(accountRepository.getById(customerDTO.getAccountId()));
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
-        customer.setEmail(customerDTO.getEmail());
-        customer.setPhone(customerDTO.getPhone());
-        return customer;
-    }
-
-    //TODO: update name, email, phone
-    public Customer updateCustomer(Customer customer) {
-        return customerRepository.save(customer);
+        customer.setAccount(accountRepository.getById(newCustomerInfo.getAccountId()));
+        customer.setFirstName(newCustomerInfo.getFirstName());
+        customer.setLastName(newCustomerInfo.getLastName());
+        customer.setEmail(newCustomerInfo.getEmail());
+        customer.setPhone(newCustomerInfo.getPhone());
+        return new CustomerInputDTO(customerRepository.save(customer));
     }
 
 }

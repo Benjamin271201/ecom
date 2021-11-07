@@ -49,6 +49,7 @@ public class AddressController {
         return addressService.addAddress(address);
     }
 
+    //TODO: fix this
     @PutMapping
     @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
     public Address updateAddress(@RequestBody Address address) {

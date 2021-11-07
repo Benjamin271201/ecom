@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/cart-detail-management")
 public class CartDetailController {
@@ -30,7 +32,7 @@ public class CartDetailController {
     //for add/update
     @PostMapping("/details")
     @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
-    public CartDetailDTO addCartDetail(@RequestBody CartDetailDTO cartDetailDTO) {
+    public CartDetailDTO addCartDetail(@Valid @RequestBody CartDetailDTO cartDetailDTO) {
         return cartDetailService.addCartDetail(cartDetailDTO);
     }
 

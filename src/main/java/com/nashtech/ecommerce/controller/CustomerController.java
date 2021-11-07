@@ -1,12 +1,14 @@
 package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Customer;
+import com.nashtech.ecommerce.dto.CustomerInputDTO;
 import com.nashtech.ecommerce.dto.CustomerOutputDTO;
 import com.nashtech.ecommerce.security.SecurityUtils;
 import com.nashtech.ecommerce.service.CustomerService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,5 +38,12 @@ public class CustomerController {
     public CustomerOutputDTO getCustomerById(@PathVariable("id") int id) {
         SecurityUtils.isForbidden(customerService.getCustomerDTOById(id).getAccountId());
         return customerService.getCustomerDTOById(id);
+    }
+
+    @PutMapping("/customers")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public CustomerInputDTO updateCustomerInfo(@Valid @RequestBody CustomerInputDTO newCustomerInfo) {
+        SecurityUtils.isForbidden(newCustomerInfo.getAccountId());
+        return customerService.updateCustomer(newCustomerInfo);
     }
 }

@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 public @Data class CustomerInputDTO {
-    //TODO: use this as update
     @NotNull(message = "Account id cannot be null")
     private int accountId;
     @NotBlank(message = "First name cannot be empty!")

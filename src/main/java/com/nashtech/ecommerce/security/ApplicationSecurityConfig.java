@@ -16,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration @EnableWebSecurity @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -43,6 +45,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*");
+            }
+        };
     }
 
     private static final String[] AUTH_WHITELIST = {
@@ -85,11 +97,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .deleteCookies("remember-me")
 //                    .logoutSuccessUrl("/index");
 
+                //TODO: enable cors and csrf
         .cors().and().csrf().disable()
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
         .antMatchers("/api/test/**").permitAll()
+        .antMatchers("/api/**").permitAll()
         .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -2,6 +2,7 @@ package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Product;
 import com.nashtech.ecommerce.dto.ProductDTO;
+import com.nashtech.ecommerce.dto.ProductInputDTO;
 import com.nashtech.ecommerce.service.ProductService;
 import com.nashtech.ecommerce.service.TransactionDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -42,7 +44,7 @@ public class ProductController {
 
     @PostMapping()
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ProductDTO addProduct(@RequestBody Product product) {
+    public ProductInputDTO addProduct(@Valid @RequestBody ProductInputDTO product) {
         return productService.addProduct(product);
     }
 }

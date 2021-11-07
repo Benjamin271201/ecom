@@ -48,7 +48,7 @@ public class ReviewService {
                 .orElseThrow(() -> new NotFoundException(REVIEW_NOT_FOUND));
     }
 
-    //TODO: if reviewed -> not allowed to review again
+    //TODO: if reviewed -> not allowed to review again (check isActive as well)
     //TODO: only customer who bought this product has the ability to review
     //add review
     public ReviewDTO addReview(int productId, int customerId, String context, int rating) {
@@ -65,7 +65,6 @@ public class ReviewService {
     }
 
     //edit review
-    //TODO: check if this user has the right to edit this comment
     public ReviewDTO editReview(int id, String context, int rating) {
         Review review = getReviewById(id);
         review.setContext(context);

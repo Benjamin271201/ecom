@@ -55,23 +55,4 @@ public class CategoryService {
         category.setActive(!currentStatus);
         categoryRepository.save(category);
     }
-
-    //TODO: remove
-//    public Optional<Category> disableCategory(int id) {
-//        Optional<Category> category = findCategoryById(id);
-//        category.ifPresent(cat -> {
-//            cat.setActive(false);
-//            categoryRepository.save(cat);
-//        });
-//        return category;
-//    }
-//
-//    public Optional<Category> enableCategory(int id) {
-//        Optional<Category> category = findCategoryById(id);
-//        category.ifPresent(cat -> {
-//            cat.setActive(true);
-//            categoryRepository.save(cat);
-//        });
-//        return category;
-//    }
 }

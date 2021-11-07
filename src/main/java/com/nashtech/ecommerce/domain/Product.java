@@ -15,7 +15,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity @Table (name = "product")
-//TODO: assign seq generator
 public @Data class Product implements Serializable {
     @Id @Column (name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_gen")
