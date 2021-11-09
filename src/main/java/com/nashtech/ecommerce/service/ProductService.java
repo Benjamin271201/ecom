@@ -38,7 +38,7 @@ public class ProductService {
     }
 
     public List<ProductDTO> searchProductsByName(String keyword) {
-        return productRepository.getProductByNameContains(keyword).stream().map(ProductDTO::new).toList();
+        return productRepository.getProductByNameContainsIgnoreCase(keyword).stream().map(ProductDTO::new).toList();
     }
 
     public ProductInputDTO addProduct(ProductInputDTO newProduct) {
@@ -57,6 +57,10 @@ public class ProductService {
         return productRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(PRODUCT_NOT_FOUND));
+    }
+
+    public ProductDTO getProductDTOById(int id) {
+        return new ProductDTO(getProductById(id));
     }
 
     public void updateProductStock(int productId, int newStock) {

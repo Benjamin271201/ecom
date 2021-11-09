@@ -4,10 +4,12 @@ import com.nashtech.ecommerce.domain.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.context.annotation.Bean;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 
@@ -15,18 +17,19 @@ import java.util.HashSet;
 @Getter
 @Setter
 public class ProductInputDTO {
+    //TODO: change not null & range for int
     @NotBlank
     private String name;
-    @NotEmpty
+    @NotNull
     private int brandId;
-    @NotEmpty
+    @NotNull
     private int categoryId;
-    @NotEmpty
-    @Size(max = 1000000000)
+    @NotNull
+    @Range(min=1, max = 1000000000)
     private long price;
     private String description;
-    @NotEmpty
-    @Size(max = 100000000)
+    @NotNull
+    @Range(min=1, max = 100000000)
     private int stock;
 
     public ProductInputDTO(Product product) {

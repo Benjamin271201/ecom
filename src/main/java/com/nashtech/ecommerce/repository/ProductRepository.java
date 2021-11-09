@@ -1,8 +1,8 @@
 package com.nashtech.ecommerce.repository;
 
 import com.nashtech.ecommerce.domain.Product;
-import com.nashtech.ecommerce.domain.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,8 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
-    public List<Product> getProductByNameContains(String keyword);
+public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
+    //TODO: add ignore case on all search
+    public List<Product> getProductByNameContainsIgnoreCase(String keyword);
 
     public List<Product> findProductsByCategoryId(int categoryId);
 

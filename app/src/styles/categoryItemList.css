@@ -1,0 +1,17 @@
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .ui.container {
+      width: 723px;
+    }
+  
+    .ui.grid.container {
+      width: calc( 723px  +  2rem ) !important;
+    }
+  
+    .ui.relaxed.grid.container {
+      width: calc( 723px  +  3rem ) !important;
+    }
+  
+    .ui.very.relaxed.grid.container {
+      width: calc( 723px  +  5rem ) !important;
+    }
+  }

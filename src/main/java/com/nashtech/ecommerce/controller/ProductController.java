@@ -32,14 +32,19 @@ public class ProductController {
         return productService.getProductsByBrandId(brandId);
     }
 
+    @GetMapping(value = "/products", params="id")
+    public ProductDTO getProductById(@RequestParam int id) {
+        return productService.getProductDTOById(id);
+    }
+
+    @GetMapping(value = "/products", params = "keyword")
+    public List<ProductDTO> searchProductsByName(@RequestParam String keyword) {
+        return productService.searchProductsByName(keyword);
+    }
+
     @GetMapping("/products")
     public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
-    }
-
-    @GetMapping("/products/{keyword}")
-    public List<ProductDTO> searchProductsByName(@PathVariable("keyword") String keyword) {
-        return productService.searchProductsByName(keyword);
     }
 
     @PostMapping()
