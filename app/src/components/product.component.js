@@ -45,13 +45,27 @@ const Product = (props) => {
         })
     }
 
+    const fetchProductsByCategory = async (category) => {
+        api.search("product", "products", `categories/${category}`)
+        .then(response => {
+            const products = response.map(product => {
+                return (
+                    productFormat(product)
+                )
+            })
+            setProductList(products);
+        })
+    }
+
     useEffect(() => { 
-        if (props.search === "") {
+        if (props.search === "" && props.category === "") {
             fetchAllProducts();
-        } else {
+        } else if (props.category !== "") {
+            fetchProductsByCategory(props.category);
+        }  else {
             fetchProductsByKeyword(props.search);
         }
-    }, [props.search]);
+    }, [props.search, props.category]);
 
     return (
         <Grid container columns={5}>

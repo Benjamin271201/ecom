@@ -5,19 +5,22 @@ import Product from "./product.component";
 
 function Home() {
   const [keyword, setKeyword] = useState("");
-
+  const [category, setCategory] = useState("");
   const searchHandler = (keyword) => {
     setKeyword(keyword);
   }
 
+  const categoryHandler = (category) => {
+    setCategory(category);
+  }
+
   useEffect(() => {
-    console.log(keyword)
-  }, [keyword])
+  }, [keyword, category])
 
   return (
     <div>
-      <Navbar submit={searchHandler} />
-      <Product search={keyword}/>
+      <Navbar search={searchHandler} category={categoryHandler} />
+      <Product search={keyword} category={category}/>
     </div>
   )
 }

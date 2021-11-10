@@ -1,10 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
-import Navbar from './components/navbar.component';
-import Banner from './components/banner.component';
-import CategoryProductList from './components/category-product-list';
-import LoginForm from './components/login.component';
 import Product from './components/product.component';
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import ProductDetail from './components/product-details.component';
@@ -15,6 +11,7 @@ import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
+import Cart from './components/cart.component';
 
 function App() {
   // const [currentUser, setCurrentUser] = useState();
@@ -43,6 +40,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/user" element={<BoardUser />} />
       <Route path="/products/:id" element={<ProductDetail />} />
+      <Route path="/cart" element={<Cart />} />
     </Routes>
   );
 }

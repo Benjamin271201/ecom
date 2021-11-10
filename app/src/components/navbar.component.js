@@ -1,84 +1,122 @@
-import axios from 'axios';
-import React, { useState, useEffect} from 'react';
-import { Dropdown, Menu, Input, Icon, Button, Search } from 'semantic-ui-react';
+import React, { useState, useEffect } from "react";
+import { Dropdown, Menu, Input, Icon, Button, Search } from "semantic-ui-react";
 import AuthService from "../services/auth.service";
-import api from '../api/api';
-import { Link } from 'react-router-dom'
+import api from "../api/api";
+import { Link } from "react-router-dom";
 
 function Navbar(props) {
-    // const categoryList = api.list("category", "categories");
-    const [categoryList, setCategoryList] = useState([]);
-    const [user, setUser] = useState();
-    const logo ="https://www.seekpng.com/png/detail/364-3648727_lacoste-men-clothing-polos-1-vector-shopping-bag.png";
+  // const categoryList = api.list("category", "categories");
+  const [categoryList, setCategoryList] = useState([]);
+  const [user, setUser] = useState();
+  const logo =
+    "https://www.seekpng.com/png/detail/364-3648727_lacoste-men-clothing-polos-1-vector-shopping-bag.png";
 
-    const fetchCategories = () => {
-        api.list("category", "categories")
-        .then(response => {
-            let records = response.map((record) => {    
-                return (
-                {   key: record.id,
-                    text: record.categoryName,
-                    active: record.active
-                })
-            }) 
-            setCategoryList(records)
-        })
+  const handleSearchChange = (e) => {
+    e.persist();
+    props.search(e.target.value);
+  };
+
+  const handleCategorySearch = (categoryId) => {
+    console.log(categoryId)
+    props.category(categoryId);
+  };
+  
+  const fetchCategories = () => {
+    api.list("category", "categories").then((response) => {
+      let records = response.map((record) => {
+        return (
+          <Dropdown.Item
+            onClick={() => handleCategorySearch(record.id)}
+            key={record.id}
+            text={record.categoryName}
+            style={{ paddingTop: 5 }}
+          ></Dropdown.Item>
+        );
+      });
+      //get all departments
+      const getAllDeparments = (
+        <Dropdown.Item
+            onClick={() => handleCategorySearch("")}
+            key={0}
+            text="All"
+            style={{ paddingTop: 5 }}
+        ></Dropdown.Item>
+      )
+      records.unshift(getAllDeparments);
+      setCategoryList(records);
+    });
+  };
+
+  const fetchUser = () => {
+    const currentUser = localStorage.getItem("user");
+    if (currentUser === null) {
+      setUser(
+        <Menu.Menu className="four wide column " position="right">
+          <Menu.Item className="one wide column">
+            <Link to="/login">
+            <Icon name="shopping cart" size="large" />
+              Cart
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/login" className="ui primary button" id="login-btn">
+              Login
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/register" className="ui button" id="register-btn">
+              Register
+            </Link>
+          </Menu.Item>
+        </Menu.Menu>
+      );
+    } else {
+      setUser(
+        <Menu.Menu className="four wide column " position="right">
+          <Menu.Item className="one wide column">
+            <Link to="/cart">
+            <Icon name="shopping cart" size="large" />
+              Cart
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/profile">{JSON.parse(currentUser).username}</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Button onClick={AuthService.logout}>Logout</Button>
+          </Menu.Item>
+        </Menu.Menu>
+      );
     }
+  };
 
-    const fetchUser = () => {
-        const currentUser = localStorage.getItem('user');
-        if (currentUser === null) {
-            setUser (
-                <Menu.Menu className="three wide column " position="right">
-                    <Menu.Item >
-                        <Link to="/login" className="ui primary button" id="login-btn">Login</Link>
-                    </Menu.Item>
-                    <Menu.Item >
-                        <Link to="/register" className="ui button" id="register-btn">Register</Link>
-                    </Menu.Item>
-                </Menu.Menu>
-            )
-        } else {
-            setUser (
-                <Menu.Menu className="three wide column " position="right">
-                    <Menu.Item >
-                        <Link to="/profile">{JSON.parse(currentUser).username}</Link>
-                    </Menu.Item>
-                    <Menu.Item >
-                        <Button onClick={AuthService.logout}>Logout</Button>
-                    </Menu.Item>
-                </Menu.Menu>
-            )
-        }
-    }
+  useEffect(() => {
+    fetchUser();
+    fetchCategories();
+  }, []);
 
-    const handleChange = (e) => {
-        e.persist();
-        props.submit(e.target.value);
-    }
-
-    useEffect(() => { 
-        fetchUser();
-    }, []);
-
-    return (
-        <Menu size="small" className="ui grid">
-            {fetchCategories}
-            <Menu.Item compact className="one wide column centered">
-                <img auto src={logo} alt="logo" />
-            </Menu.Item>
-            <Menu.Item compact className="two wide column" >
-                <Dropdown className="centered" text='Departments' options={categoryList} simple item />
-            </Menu.Item>
-            <Menu.Item className="nine wide column">
-                <Input name="search" onChange={handleChange} placeholder='Search...' />
-            </Menu.Item>
-            <Menu.Item className="one wide column">
-                <Icon name='shopping cart' size="large" />Cart
-            </Menu.Item>
-            {user}
-        </Menu>
-    )
+  return (
+    <Menu size="small" className="ui grid" borderless>
+      <Link to="/" style={{ paddingTop: 10 }}>
+        <Menu.Item compact className="one wide column centered">
+          <img auto src={logo} alt="logo" />
+        </Menu.Item>
+      </Link>
+      <Menu.Item compact className="two wide column">
+        <Dropdown text="Departments" simple item>
+          <Dropdown.Menu>{categoryList.map((cat) => cat)}</Dropdown.Menu>
+        </Dropdown>
+      </Menu.Item>
+      <Menu.Item className="nine wide column">
+        <Input
+          name="search"
+          onChange={handleSearchChange}
+          placeholder="Search..."
+        />
+      </Menu.Item>
+      {user}
+    </Menu>
+  );
 }
 
 export default Navbar;
