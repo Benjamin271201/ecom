@@ -39,7 +39,6 @@ public class CartService {
     }
 
     public CartDTO getCartByCustomerId(int customerId) {
-        System.out.println(isAllowed(customerId));
         if (!isAllowed(customerId))
             throw new ConstraintViolationException("Unauthorized");
         Cart cart = cartRepository

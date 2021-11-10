@@ -52,7 +52,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE");
             }
         };
     }
@@ -71,40 +73,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                //csrf: cross site request forgery
-                //config so that client side cannot get this csrf token(XSRF)
-                //disable for postman api call
-//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                .and()
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/", "index", "css/*", "js/*").permitAll()
-//                .antMatchers("/api/**").hasAnyRole(CUSTOMER.name(), ADMIN.name())
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin();
-                //TODO: remeber me
-//                .and()
-//                .rememberMe();
-                //TODO: logout
-//                .and()
-//                .logout()
-//                    .logoutUrl("/logout")
-//                    .clearAuthentication(true)
-//                    .invalidateHttpSession(true)
-//                    .deleteCookies("remember-me")
-//                    .logoutSuccessUrl("/index");
-
-                //TODO: enable cors and csrf
-        .cors().and().csrf().disable()
+        http.csrf().disable()
+//                csrf: cross site request forgery
+//                config so that client side cannot get this csrf token(XSRF)
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
         .antMatchers("/api/test/**").permitAll()
         .antMatchers("/api/**").permitAll()
-        .anyRequest().authenticated();
+        .anyRequest().authenticated().and()
+        .logout()
+        .logoutUrl("/api/auth/logout")
+        .clearAuthentication(true)
+        .invalidateHttpSession(true)
+        .logoutSuccessUrl("/");
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

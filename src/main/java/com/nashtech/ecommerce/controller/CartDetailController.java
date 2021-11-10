@@ -30,7 +30,7 @@ public class CartDetailController {
     }
 
     //for add/update
-    @PostMapping("/details")
+    @PostMapping
     @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
     public CartDetailDTO addCartDetail(@Valid @RequestBody CartDetailDTO cartDetailDTO) {
         return cartDetailService.addCartDetail(cartDetailDTO);

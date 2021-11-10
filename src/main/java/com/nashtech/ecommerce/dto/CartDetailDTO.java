@@ -18,12 +18,16 @@ class CartDetailDTO {
     private int cartId;
     @NotNull (message = "Product id cannot be empty!")
     private int productId;
+    private String productName;
+    private long productPrice;
     @NotNull (message = "Quantity cannot be empty!")
     private int quantity;
 
     public CartDetailDTO(CartDetail cartDetail) {
         this.cartId = cartDetail.getCart().getId();
         this.productId = cartDetail.getProduct().getId();
+        this.productName = cartDetail.getProduct().getName();
+        this.productPrice = cartDetail.getProduct().getPrice();
         this.quantity = cartDetail.getQuantity();
     }
 }
