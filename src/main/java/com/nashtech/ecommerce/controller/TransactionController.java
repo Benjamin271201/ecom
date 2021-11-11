@@ -2,6 +2,7 @@ package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Transaction;
 import com.nashtech.ecommerce.dto.TransactionDTO;
+import com.nashtech.ecommerce.payload.request.TransactionRequest;
 import com.nashtech.ecommerce.security.SecurityUtils;
 import com.nashtech.ecommerce.service.CustomerService;
 import com.nashtech.ecommerce.service.TransactionService;
@@ -9,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product-management")
+@RequestMapping("/api/transaction-management")
 public class TransactionController {
     private final TransactionService transactionService;
 
@@ -49,11 +51,11 @@ public class TransactionController {
     }
 
     //checkout
-    @PostMapping("/{uid}")
+    @PostMapping
     @PreAuthorize("hasAuthority('CUSTOMER')")
-    public TransactionDTO createTransaction(@PathVariable("uid") int customerId) {
-        SecurityUtils.isForbidden(customerService.getCustomerById(customerId).getAccount().getId());
-        return transactionService.createTransaction(customerId);
+    public TransactionDTO createTransaction(@Valid  @RequestBody TransactionRequest transactionRequest) {
+        SecurityUtils.isForbidden(customerService.getCustomerById(transactionRequest.getCustomerId()).getAccount().getId());
+        return transactionService.createTransaction(transactionRequest.getCustomerId(), transactionRequest.getAddressId());
     }
 
     @PutMapping("/transactions")

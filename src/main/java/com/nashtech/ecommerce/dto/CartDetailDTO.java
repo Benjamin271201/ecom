@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public @Data
 class CartDetailDTO {
+    private int id;
     @NotNull (message = "Cart id cannot be empty!")
     private int cartId;
     @NotNull (message = "Product id cannot be empty!")
@@ -24,6 +25,7 @@ class CartDetailDTO {
     private int quantity;
 
     public CartDetailDTO(CartDetail cartDetail) {
+        this.id = cartDetail.getId();
         this.cartId = cartDetail.getCart().getId();
         this.productId = cartDetail.getProduct().getId();
         this.productName = cartDetail.getProduct().getName();

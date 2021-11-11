@@ -17,9 +17,9 @@ public @Data class CustomerOutputDTO {
     private String username;
     private Date joinDate;
     @NotBlank(message = "First name cannot be empty!")
-    private String firstName;
+    private String firstname;
     @NotBlank(message = "Last name cannot be empty!")
-    private String lastName;
+    private String lastname;
     @Email
     @NotEmpty(message = "Email cannot be empty!")
     private String email;
@@ -30,8 +30,8 @@ public @Data class CustomerOutputDTO {
         this.accountId = customer.getAccount().getId();
         this.username = customer.getAccount().getUsername();
         this.joinDate = customer.getAccount().getJoinDate();
-        this.firstName = customer.getFirstName();
-        this.lastName = customer.getLastName();
+        this.firstname = customer.getFirstName();
+        this.lastname = customer.getLastName();
         this.email = customer.getEmail();
         this.phone = customer.getPhone();
     }

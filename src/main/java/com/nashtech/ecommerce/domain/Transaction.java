@@ -44,6 +44,9 @@ public @Data class Transaction implements Serializable {
         this.date = Date.valueOf(LocalDate.now());
     }
 
+    @ManyToOne(optional = false) @JoinColumn(name="address_id")
+    private Address address;
+
     public Transaction (Cart cart) {
         this.customer = cart.getCustomer();
         this.details = new HashSet<>();

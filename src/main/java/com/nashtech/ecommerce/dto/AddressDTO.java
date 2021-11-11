@@ -5,6 +5,7 @@ import lombok.*;
 
 @NoArgsConstructor @Getter @Setter
 public @Data class AddressDTO {
+    private int id;
     private int customerId;
     private String addressLine;
     private String district;
@@ -12,6 +13,7 @@ public @Data class AddressDTO {
     private String province;
 
     public AddressDTO(Address address) {
+        this.id = address.getId();
         this.customerId = address.getCustomer().getId();
         this.addressLine = address.getAddressLine();
         this.district = address.getDistrict();

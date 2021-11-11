@@ -1,6 +1,7 @@
 package com.nashtech.ecommerce.controller;
 
 import com.nashtech.ecommerce.domain.Address;
+import com.nashtech.ecommerce.dto.AddressDTO;
 import com.nashtech.ecommerce.exception.ForbiddenException;
 import com.nashtech.ecommerce.security.SecurityUtils;
 import com.nashtech.ecommerce.service.AddressService;
@@ -30,7 +31,7 @@ public class AddressController {
 
     @GetMapping("/addresses/users/{uid}")
     @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
-    public List<Address> getAddressesByCustomerId(@PathVariable("uid") int customerId) {
+    public List<AddressDTO> getAddressesByCustomerId(@PathVariable("uid") int customerId) {
         SecurityUtils.isForbidden(customerService.getCustomerById(customerId).getAccount().getId());
         return addressService.getAddressesByCustomerId(customerId);
     }
@@ -44,8 +45,8 @@ public class AddressController {
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
-    public Address addAddress(@RequestBody Address address) {
-        SecurityUtils.isForbidden(address.getCustomer().getAccount().getId());
+    public AddressDTO addAddress(@RequestBody AddressDTO address) {
+        SecurityUtils.isForbidden(address.getCustomerId());
         return addressService.addAddress(address);
     }
 
@@ -59,8 +60,8 @@ public class AddressController {
 
     @DeleteMapping("/addresses/{id}")
     @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
-    public void deleteAddress(@PathVariable("id") int id) {
+    public void disableAddress(@PathVariable("id") int id) {
         SecurityUtils.isForbidden(addressService.getAddressById(id).getCustomer().getAccount().getId());
-        addressService.deleteAddress(id);
+        addressService.disableAddress(id);
     }
 }

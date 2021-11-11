@@ -25,22 +25,26 @@ public class TransactionService {
     private final TransactionDetailRepository transactionDetailRepository;
     private final ProductService productService;
     private final CartService cartService;
+    private final AddressService addressService;
 
-    public TransactionService(TransactionRepository transactionRepository,
+    public TransactionService(TransactionRepository transactionRepository, AddressService addressService,
                               ProductService productService, CartService cartService,
                               TransactionDetailRepository transactionDetailRepository) {
         this.transactionRepository = transactionRepository;
         this.productService = productService;
         this.cartService = cartService;
         this.transactionDetailRepository = transactionDetailRepository;
+        this.addressService = addressService;
     }
 
     //save transaction to db
     @Transactional
-    public TransactionDTO createTransaction(int customerId) {
+    public TransactionDTO createTransaction(int customerId, int addressId) {
         //customerId == cartId
         Cart cart = cartService.getCartById(customerId);
         Transaction transaction = new Transaction(cart);
+        //add address
+        transaction.setAddress(addressService.getAddressById(addressId));
         //update the in-stock/sold of the bought products
         cart.getDetails().forEach(cartDetail -> {
             Product product = cartDetail.getProduct();

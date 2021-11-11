@@ -80,7 +80,10 @@ function Navbar(props) {
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/profile">{JSON.parse(currentUser).username}</Link>
+            <Link to="/settings">
+              <Icon name="user" size="large" />
+              {JSON.parse(currentUser).username}
+            </Link>
           </Menu.Item>
           <Menu.Item>
             <Button onClick={AuthService.logout}>Logout</Button>

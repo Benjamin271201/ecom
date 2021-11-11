@@ -12,4 +12,8 @@ import java.util.List;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Integer> {
     public List<Address> getAddressesByCustomerId(int customerId);
+
+    @Modifying
+    @Query ("UPDATE Address a SET a.isActive = false WHERE a.id = :id")
+    public void disableAddressById(@Param("id") int id);
 }

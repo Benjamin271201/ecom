@@ -7,6 +7,7 @@ import com.nashtech.ecommerce.service.CartDetailService;
 import com.nashtech.ecommerce.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,9 +38,9 @@ public class CartDetailController {
     }
 
     //remove individual cart detail
-    @DeleteMapping("/details")
+    @DeleteMapping("/details/{id}")
     @PreAuthorize("hasAnyAuthority('CUSTOMER', 'ADMIN')")
-    public void removeCartDetail(@RequestParam int id){
+    public void removeCartDetail(@PathVariable("id") int id){
         cartDetailService.removeCartDetail(id);
     }
 }

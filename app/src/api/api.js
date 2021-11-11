@@ -35,7 +35,7 @@ const activities = {
   details_type: (activity,  target, field, id) => requests.get(`/${activity}-management/${target}/${field}/${id}`),
   create: (activity, body) => requests.post(`/${activity}-management`, body),
   update: activity => requests.put(`/activities/${activity.id}`, activity),
-  delete: id => requests.del(`/activities/${id}`),
+  delete: (activity, target, id) => requests.del(`/${activity}-management/${target}/${id}`),
 };
 
 export default activities;

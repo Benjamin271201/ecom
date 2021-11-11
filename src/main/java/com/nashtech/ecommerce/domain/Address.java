@@ -1,6 +1,7 @@
 package com.nashtech.ecommerce.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity @Table (name = "address")
+@Where(clause = "is_active = true")
 
 public @Data class Address implements Serializable {
     @Id @Column (name = "id")
@@ -34,4 +36,7 @@ public @Data class Address implements Serializable {
 
     @Column (name = "province")
     private String province;
+
+    @Column (name = "is_active")
+    private boolean isActive;
 }

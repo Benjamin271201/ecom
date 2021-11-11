@@ -4,7 +4,7 @@ import { Grid, Image } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import api from "../api/api"
 
-function CategoryItemList() {
+function OrderHistory() {
     const demoImg = "https://semantic-ui.com/images/wireframe/image.png";
     return (
         <Grid container columns={5}>
@@ -27,4 +27,4 @@ function CategoryItemList() {
     )
 }
 
-export default CategoryItemList;
+export default OrderHistory;
