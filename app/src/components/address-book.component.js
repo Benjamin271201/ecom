@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { Button, Table, Grid, Input, Form} from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import api from "../api/api";
-import NavBar from "./navbar.component";
 
 const AddressBook = () => {
   const customerId =

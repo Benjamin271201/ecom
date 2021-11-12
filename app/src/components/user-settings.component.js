@@ -1,20 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import { Grid, GridColumn, Image, Label, Menu} from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import React, {useState} from 'react';
+import { Grid, GridColumn, Menu} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import api from "../api/api";
 import NavbarIconOnly from './navbar-icon-only.component';
 import CustomerInfo from './customer-info.component';
 import AddressBook from './address-book.component';
 import ChangePassword from './change-password.component';
 import OrderHistory from './order-history.component';
+import authService from '../services/auth.service';
 
 const UserSettings = () => {
-    const customerId =
-    localStorage.getItem("user") !== null
-      ? JSON.parse(localStorage.getItem("user")).id
-      : "";
-
     const [itemDisplay, setItemDisplay] = useState("");
     const [activeItem, setActiveItem] = useState("profile");
     
@@ -38,16 +32,16 @@ const UserSettings = () => {
                 setItemDisplay(<CustomerInfo />);
                 break;
         }
-        console.log(itemDisplay)
     }
 
     return (
         <div>
+            {handleItemClick}
             <NavbarIconOnly />
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={3}>
-                        <Menu pointing vertical style={{paddingLeft: 20, marginLeft: 40}}>
+                        <Menu pointing vertical style={{marginLeft: 40}}>
                             <Menu.Item
                                 name='Customer profile'
                                 active={activeItem === 'Customer profile'}
@@ -67,6 +61,10 @@ const UserSettings = () => {
                                 name='Order History'
                                 active={activeItem === 'Order History'}
                                 onClick={handleItemClick}
+                            />
+                            <Menu.Item
+                                name='Logout'
+                                onClick={authService.logout}
                             />
                         </Menu>
                     </Grid.Column>

@@ -26,13 +26,13 @@ const Cart = () => {
         api.create("transaction", transactionDetail)
         .then(
         () => {
+            alert("Checkout completed")
             customHistory.push("/");
             window.location.reload();
         })
     }
 
     const handleAddressSelect = (e, data) => {
-        //?????????????????
         setAddressId(data.value);
     }
 
@@ -94,8 +94,9 @@ const Cart = () => {
             <CustomerInfo />
 
             <Dropdown
+                style={{width: "50%", margin: "auto"}}
                 onChange = {handleAddressSelect}
-                placeholder='Select Address:'
+                placeholder='Select Address'
                 fluid
                 selection
                 options = {addressList}

@@ -24,7 +24,7 @@ class Account implements Serializable {
     private String username;
 
     @NotBlank (message = "Password cannot be empty!")
-    @Pattern (regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$")
+    @Pattern (regexp = "^(?=.*\\d)(?=.*[a-zA-Z0-9]).{8,}$")
     @Column (name = "account_password")
     private String password;
 

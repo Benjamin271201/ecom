@@ -17,7 +17,7 @@ public class SignupRequest implements Serializable {
     private String username;
 
     @NotBlank
-    @Pattern (regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$")
+    @Pattern (regexp = "^(?=.*\\d)(?=.*[a-zA-Z0-9]).{8,}$")
     private String password;
 
     @NotBlank

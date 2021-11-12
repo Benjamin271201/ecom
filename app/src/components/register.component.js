@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import {Button} from 'semantic-ui-react'
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -40,14 +41,25 @@ const vusername = (value) => {
 };
 
 const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
+  const passwordRegex = "^(?=.*\\d)(?=.*[a-zA-Z0-9]).{8,}$";
+  if (value.length < 8 && !value.match(passwordRegex)) {
     return (
       <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
+        The password length must be at least 8 and contains only alphabetic characters.
       </div>
     );
   }
 };
+
+// const vconfirmPassword = (value, password) => {
+//   if (value !== password) {
+//     return (
+//       <div className="alert alert-danger" role="alert">
+//         Password mismatch!
+//       </div>
+//     );
+//   }
+// };
 
 const RegisterForm = (props) => {
   let formInput = useRef(null);
@@ -55,16 +67,18 @@ const RegisterForm = (props) => {
   const [details, setDetails] = useState({
     username: "",
     password: "",
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
+    loading: false,
+    message: "",
   });
   let inputDetails = {
     username: "",
     password: "",
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     loading: false,
@@ -78,7 +92,6 @@ const RegisterForm = (props) => {
       ...prevDetails,
       [name]: value,
     }));
-    console.log(details);
   };
 
   const handleSubmit = () => {
@@ -89,30 +102,30 @@ const RegisterForm = (props) => {
     e.preventDefault();
     handleSubmit();
     console.log(details);
+
     formInput.validateAll();
 
     if (checkBtn.context._errors.length === 0) {
       AuthService.register(
         details.username,
         details.password,
+        details.firstName,
+        details.lastName,
         details.email,
-        details.firstname,
-        details.lastname,
         details.phone
       ).then(
         (response) => {
           setDetails({
-            message: response.data.message,
+            message: response.message,
             successful: true,
           });
-          customHistory.push("/");
+          customHistory.push("/login");
           window.location.reload();
         },
         (error) => {
           const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
+            ( error.response &&
+              error.response.message) ||
             error.message ||
             error.toString();
 
@@ -156,20 +169,28 @@ const RegisterForm = (props) => {
           onChange={handleChange}
           validations={[required, vpassword]}
         />
+        {/* <label htmlFor="Confirm password">Confirm Password</label>
+        <Input
+          type="password"
+          className="form-control"
+          name="confirmPassword"
+          onChange={handleChange}
+          validations={[required, vconfirmPassword(details.password)]}
+        /> */}
         <label htmlFor="firstname">First name</label>
         <Input
           type="text"
           className="form-control"
-          name="firstname"
-          value={details.firstname}
+          name="firstName"
+          value={details.firstName}
           onChange={handleChange}
         />
         <label htmlFor="lastname">Last Name</label>
         <Input
           type="text"
           className="form-control"
-          name="lastname"
-          value={details.lastname}
+          name="lastName"
+          value={details.lastName}
           onChange={handleChange}
         />
         <label htmlFor="email">Email</label>
@@ -188,8 +209,10 @@ const RegisterForm = (props) => {
           name="phone"
           value={details.phone}
           onChange={handleChange}
-        />
-        <button disabled={details.loading}>Register</button>
+        /><br/>
+        <Button type="submit" primary button disabled={details.loading}>
+          Register
+        </Button>
 
         {details.message && (
           <div className="alert alert-danger" role="alert">

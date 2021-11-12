@@ -1,7 +1,7 @@
-import axios from "axios";
+import { createBrowserHistory } from "history";
 import api from "../api/api";
 
-const API_URL = "http://localhost:8080/api/auth/";
+export const customHistory = createBrowserHistory();
 
 class AuthService {
   login(username, password) {
@@ -22,24 +22,24 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+    customHistory.push("/")
     window.location.reload();
   }
 
-  register(firstname, lastname, username, email, password, phone) {
-    return axios.post(API_URL + "register", {
-        firstname, 
-        lastname,
+  register(username, password, firstName, lastName, email,phone) {
+    return api.auth("register", {
         username,
         password,
+        firstName, 
+        lastName,
         email,
         phone
     })
     .then(response => {
-      console.log(response)
-      if (response.data.token) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+      if (response.token) {
+        localStorage.setItem("user", JSON.stringify(response));
       }
-      return response.data;
+      return response;
     })    
   }
 

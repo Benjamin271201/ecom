@@ -68,11 +68,21 @@ function LoginForm() {
             error.message ||
             error.toString();
 
-          setDetails({ loading: false, message: resMessage });
+          setDetails(prevDetails => {
+              return { 
+                ...prevDetails,
+                loading: false,
+                message: resMessage }
+          });
         }
       );
     } else {
-      setDetails({ loading: false });
+      setDetails(prevDetails => {
+        return { 
+          ...prevDetails,
+          loading: false,
+        }
+      });
     }
   };
 

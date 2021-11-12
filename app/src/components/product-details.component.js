@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Grid, Image, Label, Button, Input } from 'semantic-ui-react';
+import { Grid, Image, Label, Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import api from "../api/api";
 import NavBar from "./navbar.component"
@@ -70,6 +70,7 @@ const ProductDetail = () => {
     const handleBuyNow = () => {
         handleAddToCart();
         customHistory.push("/cart");
+        window.location.reload();
     } 
 
     useEffect(() => {
