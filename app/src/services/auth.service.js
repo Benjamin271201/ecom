@@ -3,6 +3,7 @@ import api from "../api/api";
 
 export const customHistory = createBrowserHistory();
 
+//TODO: config response data
 class AuthService {
   login(username, password) {
     return api
@@ -11,11 +12,9 @@ class AuthService {
         password
       })
       .then(response => {
-        console.log(response)
         if (response.token) {
           localStorage.setItem("user", JSON.stringify(response));
         }
-
         return response;
       });
   }

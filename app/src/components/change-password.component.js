@@ -1,13 +1,19 @@
 import React, {useState} from 'react';
 import Product from './product.component';
-import { Form } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import api from "../api/api"
 
 function ChangePassword() {
-    const demoImg = "https://semantic-ui.com/images/wireframe/image.png";
+    const passwordRegex = "";
+
+    const handleChangePassword = () => {
+        //check if current password is true
+        //validate new pass
+    }
+    
     return (
-        <Form>
+        <Form onSubmit={handleChangePassword}>
             <Form.Field>
                 <label>Current Password</label>
                 <input />
@@ -20,6 +26,7 @@ function ChangePassword() {
                 <label>Confirm New Password</label>
                 <input />
             </Form.Field>
+            <Button type='submit'>Submit</Button>
         </Form>
     )
 }

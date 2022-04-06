@@ -54,7 +54,7 @@ public class ReviewService {
     public ReviewDTO addReview(int productId, int customerId, String context, int rating) {
         Review review = new Review();
         if (reviewRepository.existsByCustomerIdAndProductId(customerId, productId))
-            throw new AlreadyExistsException(REVIEW_ALREADY_EXISTS);
+            throw new AlreadyExistsException("review", REVIEW_ALREADY_EXISTS);
         review.setProduct(productService.getProductById(productId));
         review.setCustomer(customerService.getCustomerById(customerId));
         review.setPostedDate();

@@ -23,7 +23,7 @@ public class CategoryService {
 
     public Category addCategory(String name) {
         if (categoryRepository.existsByCategoryName(name)) {
-            throw new AlreadyExistsException(CATEGORY_ALREADY_EXISTS);
+            throw new AlreadyExistsException("category", CATEGORY_ALREADY_EXISTS);
         }
         Category category = new Category();
         category.setCategoryName(name);

@@ -39,7 +39,7 @@ public class AccountController {
         return accountService.getAllAccount();
     }
 
-    @PutMapping("/accounts/password")
+    @PutMapping("/accounts")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CUSTOMER')")
     public void updatePassword(@RequestParam int id, @RequestParam String newPassword) {
         SecurityUtils.isForbidden(id);

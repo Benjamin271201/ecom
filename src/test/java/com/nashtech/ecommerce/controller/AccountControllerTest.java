@@ -3,9 +3,8 @@ package com.nashtech.ecommerce.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nashtech.ecommerce.domain.Account;
-import com.nashtech.ecommerce.service.AccountService;
+import com.nashtech.ecommerce.service.AuthService;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 public class AccountControllerTest {
     @Autowired
-    private AccountService accountService;
+    private AuthService authService ;
 
     @Autowired
     private EntityManager entityManager;
