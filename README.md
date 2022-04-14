@@ -28,8 +28,18 @@ Back-end (Intellij recommend):
 - Open the whole project
 - Build and run the application
 
-### 2. Database Models (WIP)
-### 3. Screenshots (WIP)
+
+### 2. Main Functions
+- Customer:
+  + Login/register
+  + Browse/categorize/search products
+  + View details of a product (name, desc, in-stock, rating, price, reviews, etc.)
+  + Manage cart items
+  + Buy and leave a review after purchase an item (optional) 
+  + Customer profile, address book, purchase history
+- Admin: (WIP)
+### 3. Database Models (WIP)
+### 4. Screenshots (WIP)
 
 
 
