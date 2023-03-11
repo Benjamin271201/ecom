@@ -9,13 +9,13 @@ This app was made during my internship program, in order to get some hands-on ex
 - Others: AWS (for database deployment)
 
 ## Disclaimer: 
-  - This project (both FE and BE) is NOT being deployed on AWS yet (only the database), so if you wish to see the application in action, please run it locally following the guides below.
+  - This project (both FE and BE) is NOT being deployed on AWS yet (only the database), so if you wish to see the application in action, please run it locally following the guides below. (UPDATE: the database has been terminated as well due to being costly without free tier. Migration to H2 is being considered)
   - Putting both the front-end and back-end code in the same repository is NOT RECOMMENDED. Since this is a personal project, I would like all the code in the same place for easier management. If you are working in a team, I suggest keeping those in separate repos.
 
 ### 1. Installation Guide
 Clone the whole project
  
-Front-end (VSCode recommend):
+Front-end (VSCode preferably):
 - Open the app folder
 - Install:
   + Npm: `npm i` or `npm install`
@@ -24,7 +24,7 @@ Front-end (VSCode recommend):
   + Npm: `npm start`
   + Yarn: `yarn start`
  
-Back-end (Intellij recommend):
+Back-end (Intellij preferably):
 - Open the whole project
 - Build and run the application
 
