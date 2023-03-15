@@ -81,13 +81,13 @@ public class AuthService {
 //        Error error = new Error()
         // Create new customer's account
         if (accountRepository.findAccountByUsername(signUpRequest.getUsername()).isPresent())
-            throw new AlreadyExistsException("username", "Username already exists!");
+            throw new AlreadyExistsException("Username already exists!");
         //check phone number existence
         if (customerRepository.existsCustomerByPhone(signUpRequest.getPhone()))
-            throw new AlreadyExistsException("phone", "Phone number already in use!");
+            throw new AlreadyExistsException("Phone number already in use!");
         //check email existence
         if (customerRepository.existsCustomerByEmail(signUpRequest.getEmail()))
-            throw new AlreadyExistsException("email", "Email already in use!");
+            throw new AlreadyExistsException("Email already in use!");
         //create new account
         Account account = new Account();
         account.setUsername(signUpRequest.getUsername());

@@ -22,7 +22,7 @@ public class BrandService {
 
     public Brand addBrand(String name) {
         if (brandRepository.existsByBrandName(name)) {
-            throw new AlreadyExistsException("brand", BRAND_ALREADY_EXISTS);
+            throw new AlreadyExistsException(BRAND_ALREADY_EXISTS);
         }
         Brand brand = new Brand();
         brand.setBrandName(name);
